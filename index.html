@@ -2032,9 +2032,11 @@ function loadProjectToUI(){
 
 // ==================== 一键生成 ====================
 let _autoGenStopped = false;
+let _autoGenActive = false;
 
 function stopAutoGen(){
   _autoGenStopped = true;
+  _autoGenActive = false;
   if(state.abortController) state.abortController.abort();
   state.generating = false;
   document.getElementById('autoGenPanel').style.display = 'none';
@@ -2072,6 +2074,7 @@ async function startAutoGen(){
   saveState();
   
   _autoGenStopped = false;
+  _autoGenActive = true;
   document.getElementById('autoGenPanel').style.display = 'block';
   document.getElementById('autoGenOverlay').style.display = 'block';
   
@@ -2146,6 +2149,7 @@ async function startAutoGen(){
       document.getElementById('autoGenStatus').textContent = '❌ 生成中断: ' + e.message;
     }
   }finally{
+    _autoGenActive = false;
     state.generating = false;
     document.getElementById('btnAutoGen').disabled = false;
   }
@@ -2604,6 +2608,13 @@ function hideStopButton(){
   document.getElementById('btnStopGen').style.display = 'none';
 }
 
+function scrollChapterEditorToLatest(editor){
+  if(!editor) return;
+  if(_autoGenActive || editor.scrollTop + editor.clientHeight >= editor.scrollHeight - 60){
+    editor.scrollTop = editor.scrollHeight;
+  }
+}
+
 async function generateChapter(){
   if(!state.baseURL || !state.model){
     toast('请先在设置中配置 API');
@@ -2736,7 +2747,7 @@ async function generateChapter(){
         firstChunk = false;
       }
       editor.value += chunk;
-      if(editor.scrollTop + editor.clientHeight >= editor.scrollHeight - 60) editor.scrollTop = editor.scrollHeight;
+      scrollChapterEditorToLatest(editor);
       updateWordCount();
       updatePlotPointUI();
     }, {onReasoning: (chunk) => {
@@ -2793,7 +2804,7 @@ async function generateChapter(){
           {role:'user', content: `${contCtx}\n---\n以下是本章已写内容（后半部分），请继续往下写，保持风格一致：\n\n${currentText.slice(-3000)}`},
         ], (chunk) => {
           editor.value += chunk;
-          if(editor.scrollTop + editor.clientHeight >= editor.scrollHeight - 60) editor.scrollTop = editor.scrollHeight;
+          scrollChapterEditorToLatest(editor);
           updateWordCount();
           updatePlotPointUI();
         });
@@ -2949,7 +2960,7 @@ async function continueChapter(){
         firstChunk = false;
       }
       editor.value += chunk;
-      if(editor.scrollTop + editor.clientHeight >= editor.scrollHeight - 60) editor.scrollTop = editor.scrollHeight;
+      scrollChapterEditorToLatest(editor);
       updateWordCount();
       updatePlotPointUI();
     }, {onReasoning: (chunk) => {
