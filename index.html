@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>📖 长篇小说写作助手 V4.3.12-exG</title>
+<title>📖 长篇小说写作助手 V4.3.13-exG</title>
 <style>
 /* ==================== CSS 变量 & 重置 ==================== */
 :root {
@@ -884,7 +884,7 @@ select{cursor:pointer;appearance:auto}
   .write-layout #chapterEditor{height:100%;min-height:0}
 }
 
-/* ==================== V4.3.12-exG App Shell ==================== */
+/* ==================== V4.3.13-exG App Shell ==================== */
 .mobile-app,.mobile-sheet-overlay{display:none}
 @media(max-width:820px){
   html{font-size:15px;-webkit-text-size-adjust:100%}
@@ -1335,6 +1335,18 @@ select{cursor:pointer;appearance:auto}
             </details>
           </div>
           <div style="border-top:1px solid var(--border);padding:6px 10px">
+            <details id="continuityCacheDetails" style="font-size:.72rem;color:var(--text2)">
+              <summary style="cursor:pointer;font-weight:600;user-select:none">
+                <span>🔗 连贯缓存</span>
+                <span id="continuityCacheStatus" style="font-weight:400;font-size:.68rem;float:right">未生成</span>
+              </summary>
+              <div style="display:flex;justify-content:flex-end;margin:4px 0">
+                <button class="btn btn-sm btn-ghost" id="btnRefreshContinuityCache" onclick="refreshContinuityCacheManual()" style="font-size:.68rem;padding:2px 7px;min-height:22px">🔄 刷新</button>
+              </div>
+              <div id="continuityCachePanel" style="padding:4px 6px;background:var(--bg);border-radius:4px;line-height:1.5;max-height:150px;overflow-y:auto;font-size:.72rem;color:var(--text2)">暂无连贯缓存</div>
+            </details>
+          </div>
+          <div style="border-top:1px solid var(--border);padding:6px 10px">
             <details style="font-size:.72rem;color:var(--text2)">
               <summary style="cursor:pointer;font-weight:600;user-select:none">🧠 长期记忆 <span id="memCount" style="font-weight:400;font-size:.7rem"></span></summary>
               <div id="memoryViewer" style="margin-top:4px;font-size:.72rem;color:var(--text2);max-height:200px;overflow-y:auto;line-height:1.5">
@@ -1536,6 +1548,11 @@ select{cursor:pointer;appearance:auto}
             <label class="auto-gen-switch">
               <span><span class="toggle-label">清空章节</span><span class="toggle-sub">删除已有正文后重写</span></span>
               <input type="checkbox" id="agClearChapters" checked>
+              <span class="toggle-track"></span>
+            </label>
+            <label class="auto-gen-switch">
+              <span><span class="toggle-label">清空批注</span><span class="toggle-sub">清除本章批注和全书批注</span></span>
+              <input type="checkbox" id="agClearNotes">
               <span class="toggle-track"></span>
             </label>
           </div>
@@ -1915,7 +1932,7 @@ select{cursor:pointer;appearance:auto}
 
 
 
-<div id="mobileApp" class="mobile-app" aria-label="mobile"><div class="mobile-topbar"><div class="mobile-title-wrap"><div class="mobile-eyebrow" id="mobileEyebrow">V4.3.12-exG</div><div class="mobile-title" id="mobileTitle"></div></div><div class="mobile-top-actions"><button class="mobile-icon-btn" onclick="openSettings()">&#9881;</button><button class="mobile-icon-btn" onclick="openSnapshotModal()">&#128220;</button><button class="mobile-icon-btn" onclick="openMobileQuickActions()">&#8943;</button></div></div><main class="mobile-main"><section class="mobile-screen active" id="mobile-screen-project"></section><section class="mobile-screen" id="mobile-screen-outline"></section><section class="mobile-screen" id="mobile-screen-write"></section><section class="mobile-screen" id="mobile-screen-chat"></section><section class="mobile-screen" id="mobile-screen-export"></section></main><nav class="mobile-tabbar"><button class="mobile-tab active" data-mobile-tab="project" onclick="switchMobileTab('project')"><span>&#128203;</span><b id="mTabProject"></b></button><button class="mobile-tab" data-mobile-tab="outline" onclick="switchMobileTab('outline')"><span>&#128209;</span><b id="mTabOutline"></b></button><button class="mobile-tab" data-mobile-tab="write" onclick="switchMobileTab('write')"><span>&#9997;</span><b id="mTabWrite"></b></button><button class="mobile-tab" data-mobile-tab="chat" onclick="switchMobileTab('chat')"><span>&#128172;</span><b id="mTabChat"></b></button><button class="mobile-tab" data-mobile-tab="export" onclick="switchMobileTab('export')"><span>&#128230;</span><b id="mTabExport"></b></button></nav></div><div class="mobile-sheet-overlay" id="mobileSheetOverlay" onclick="closeMobileSheet(event)"><div class="mobile-sheet" role="dialog" aria-modal="true" onclick="event.stopPropagation()"><div class="mobile-sheet-handle"></div><div class="mobile-sheet-head"><div><div class="mobile-sheet-kicker" id="mobileSheetKicker"></div><h2 id="mobileSheetTitle"></h2></div><button class="mobile-icon-btn" onclick="closeMobileSheet()">&times;</button></div><div class="mobile-sheet-body" id="mobileSheetBody"></div><div class="mobile-sheet-actions" id="mobileSheetActions"></div></div></div>
+<div id="mobileApp" class="mobile-app" aria-label="mobile"><div class="mobile-topbar"><div class="mobile-title-wrap"><div class="mobile-eyebrow" id="mobileEyebrow">V4.3.13-exG</div><div class="mobile-title" id="mobileTitle"></div></div><div class="mobile-top-actions"><button class="mobile-icon-btn" onclick="openSettings()">&#9881;</button><button class="mobile-icon-btn" onclick="openSnapshotModal()">&#128220;</button><button class="mobile-icon-btn" onclick="openMobileQuickActions()">&#8943;</button></div></div><main class="mobile-main"><section class="mobile-screen active" id="mobile-screen-project"></section><section class="mobile-screen" id="mobile-screen-outline"></section><section class="mobile-screen" id="mobile-screen-write"></section><section class="mobile-screen" id="mobile-screen-chat"></section><section class="mobile-screen" id="mobile-screen-export"></section></main><nav class="mobile-tabbar"><button class="mobile-tab active" data-mobile-tab="project" onclick="switchMobileTab('project')"><span>&#128203;</span><b id="mTabProject"></b></button><button class="mobile-tab" data-mobile-tab="outline" onclick="switchMobileTab('outline')"><span>&#128209;</span><b id="mTabOutline"></b></button><button class="mobile-tab" data-mobile-tab="write" onclick="switchMobileTab('write')"><span>&#9997;</span><b id="mTabWrite"></b></button><button class="mobile-tab" data-mobile-tab="chat" onclick="switchMobileTab('chat')"><span>&#128172;</span><b id="mTabChat"></b></button><button class="mobile-tab" data-mobile-tab="export" onclick="switchMobileTab('export')"><span>&#128230;</span><b id="mTabExport"></b></button></nav></div><div class="mobile-sheet-overlay" id="mobileSheetOverlay" onclick="closeMobileSheet(event)"><div class="mobile-sheet" role="dialog" aria-modal="true" onclick="event.stopPropagation()"><div class="mobile-sheet-handle"></div><div class="mobile-sheet-head"><div><div class="mobile-sheet-kicker" id="mobileSheetKicker"></div><h2 id="mobileSheetTitle"></h2></div><button class="mobile-icon-btn" onclick="closeMobileSheet()">&times;</button></div><div class="mobile-sheet-body" id="mobileSheetBody"></div><div class="mobile-sheet-actions" id="mobileSheetActions"></div></div></div>
 <!-- ====== Toast ====== -->
 <div class="toast" id="toast"></div>
 
@@ -2194,6 +2211,8 @@ let state = {
   autoUpdateMemory: true,
   autoGenerating: false,
   lastBridgePromise: null,
+  lastMemoryTask: null,
+  lastBridgeTask: null,
   thinkingEnabled: true,
   tempDefault: true,
   topPDefault: true,
@@ -2881,6 +2900,8 @@ function getDefaultState(){
     autoUpdateMemory: true,
     autoGenerating: false,
     lastBridgePromise: null,
+    lastMemoryTask: null,
+    lastBridgeTask: null,
     thinkingEnabled: true,
     tempDefault: true,
     topPDefault: true,
@@ -3014,6 +3035,16 @@ function chapterContentHash(text){
   h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
   h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
   return ((h2 >>> 0).toString(36) + (h1 >>> 0).toString(36));
+}
+
+function getContinuitySourceHash(chapterNum){
+  const target = Number(chapterNum);
+  if(!Number.isFinite(target) || target <= 1) return '';
+  return (state.chapters || [])
+    .filter(c => Number(c.chapter) > 0 && Number(c.chapter) < target && String(c.content || '').trim())
+    .sort((a,b) => Number(a.chapter) - Number(b.chapter))
+    .map(c => `${Number(c.chapter)}:${chapterContentHash(c.content || '')}`)
+    .join('|');
 }
 
 function createFallbackChapterCard(chapterNum, fullText){
@@ -3330,7 +3361,7 @@ function toast(msg){
 // ==================== Tab 切换 ====================
 
 
-// ==================== V4.3.12-exG App Shell ====================
+// ==================== V4.3.13-exG App Shell ====================
 const M={project:'项目',outline:'大纲',write:'写作',chat:'对话',export:'导出',exportTab:'导出',save:'保存',gen:'生成',novelTitle:'小说标题',novelGenre:'小说类型',setting:'背景设定 / 故事简介',chapters:'章节数',words:'每章字数',chars:'人物设定 / 关键设定',rules:'创作规则',cards:'写作卡片',emptyOutline:'尚未生成大纲',unnamed:'未命名',info:'写作信息',quick:'快捷操作',close:'关闭',send:'发送'};
 let mobileState={tab:'project', userReading:false};
 function isMobileLayout(){return !!(window.matchMedia&&window.matchMedia('(max-width:820px)').matches)}
@@ -3346,7 +3377,7 @@ function getCurrentChapterForUI(){
   return Number(state.currentChapter) === 0 ? 0 : (Number(state.currentChapter) || 1);
 }
 function mobileValue(id){const el=document.getElementById(id);return el?el.value:''}
-function setMobileStaticLabels(){const pairs={mobileTitle:M.project,mTabProject:M.project,mTabOutline:M.outline,mTabWrite:M.write,mTabChat:M.chat,mTabExport:M.exportTab,mobileSheetKicker:'V4.3.12-exG',mobileSheetTitle:M.info};Object.entries(pairs).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&!el.textContent)el.textContent=v})}
+function setMobileStaticLabels(){const pairs={mobileTitle:M.project,mTabProject:M.project,mTabOutline:M.outline,mTabWrite:M.write,mTabChat:M.chat,mTabExport:M.exportTab,mobileSheetKicker:'V4.3.13-exG',mobileSheetTitle:M.info};Object.entries(pairs).forEach(([id,v])=>{const el=document.getElementById(id);if(el&&!el.textContent)el.textContent=v})}
 function updateMobileMode(){document.body.classList.toggle('mobile-mode',isMobileLayout());setMobileStaticLabels();if(isMobileLayout())renderMobileApp();else restoreDesktopEditor()}
 function switchMobileTab(tab){if(mobileState.tab==='write')syncMobileToDesktopBeforeAction();mobileState.tab=tab||'project';document.querySelectorAll('.mobile-screen').forEach(el=>el.classList.remove('active'));document.getElementById('mobile-screen-'+mobileState.tab)?.classList.add('active');document.querySelectorAll('.mobile-tab').forEach(el=>el.classList.toggle('active',el.dataset.mobileTab===mobileState.tab));const title=document.getElementById('mobileTitle');if(title)title.textContent=M[mobileState.tab]||M.write;renderMobileApp();saveState()}
 function renderMobileApp(){if(!isMobileLayout())return;const tab=mobileState.tab||'project';if(tab==='project')renderMobileProject();if(tab==='outline')renderMobileOutline();if(tab==='write')renderMobileWrite();if(tab==='chat')renderMobileChat();if(tab==='export')renderMobileExport();updateMobileStats()}
@@ -3410,10 +3441,10 @@ function syncMobileEditorFromDesktop(force=false, skipStats=false){if(!isMobileL
 function restoreDesktopEditor(){}
 function renderMobileChat(){const el=document.getElementById('mobile-screen-chat');if(!el)return;el.innerHTML=`<div class="mobile-chat-shell"><div class="mobile-chat-body" id="mobileChatBody"></div><div class="mobile-card"><div class="mobile-card-title">💬 对话设置</div><div class="mobile-setting-list"><label class="mobile-setting-row"><span>包含大纲</span><input type="checkbox" ${state.chatIncludeOutline?'checked':''} onchange="document.getElementById('chatIncludeOutline').checked=this.checked; state.chatIncludeOutline=this.checked; saveState()"></label><label class="mobile-setting-row"><span>包含正文</span><input type="checkbox" ${state.chatIncludeChapters?'checked':''} onchange="document.getElementById('chatIncludeChapters').checked=this.checked; state.chatIncludeChapters=this.checked; saveState()"></label></div></div><div class="mobile-chat-input"><textarea placeholder="输入消息" oninput="document.getElementById('chatInput').value=this.value; queueAutoSave()">${escapeHtml(mobileValue('chatInput'))}</textarea><button class="btn btn-primary" onclick="document.getElementById('chatInput').value=document.querySelector('.mobile-chat-input textarea').value; sendChatMessage()">发送</button></div></div>`;renderChatMessages();const messages=document.getElementById('chatMessages');const body=document.getElementById('mobileChatBody');if(messages&&body)body.innerHTML=messages.innerHTML}
 function renderMobileExport(){const el=document.getElementById('mobile-screen-export');if(!el)return;el.innerHTML=`<div class="mobile-stack"><div class="mobile-card"><div class="mobile-card-title">📦 正文导出</div><div class="mobile-actions-row">${mobileButton('TXT','exportNovel("txt")')}${mobileButton('Markdown','exportNovel("markdown")')}</div><div class="mobile-actions-row" style="margin-top:8px">${mobileButton('HTML','exportNovel("html")')}${mobileButton('项目备份','exportNovel("json")','btn-primary')}</div></div><div class="mobile-card"><div class="mobile-card-title">🧩 写作卡片</div><div class="mobile-actions-row">${mobileButton('导出卡片','exportMethodologyCards()')}${mobileButton('导入卡片','document.getElementById("methodologyImportFile").click()')}</div></div><div class="mobile-card"><div class="mobile-card-title">🛠️ 工具</div><div class="mobile-actions-row">${mobileButton('⚙️ 设置','openSettings()')}${mobileButton('📜 历史','openSnapshotModal()')}</div><div class="mobile-actions-row" style="margin-top:8px">${mobileButton('🗑️ 清空本章','clearCurrentChapter()')}${mobileButton('🧹 清空全部','clearAllChapters()')}</div><div class="mobile-actions-row" style="margin-top:8px">${mobileButton('清空批注','clearAllNotes()')}${mobileButton('清空记忆','clearMemory()')}</div></div></div>`}
-function openMobileSheet(title,body,actions='',kicker='V4.3.12-exG'){document.getElementById('mobileSheetTitle').textContent=title;document.getElementById('mobileSheetKicker').textContent=kicker;document.getElementById('mobileSheetBody').innerHTML=body||'';document.getElementById('mobileSheetActions').innerHTML=actions||'';document.getElementById('mobileSheetOverlay').classList.add('show')}
+function openMobileSheet(title,body,actions='',kicker='V4.3.13-exG'){document.getElementById('mobileSheetTitle').textContent=title;document.getElementById('mobileSheetKicker').textContent=kicker;document.getElementById('mobileSheetBody').innerHTML=body||'';document.getElementById('mobileSheetActions').innerHTML=actions||'';document.getElementById('mobileSheetOverlay').classList.add('show')}
 function closeMobileSheet(event){if(event&&event.target!==document.getElementById('mobileSheetOverlay'))return;document.getElementById('mobileSheetOverlay')?.classList.remove('show')}
 function openMobileQuickActions(){openMobileSheet('快捷操作',`<div class="mobile-actions-row">${mobileButton('⚡ 一键生成','closeMobileSheet(); autoGenerateAll()','btn-primary')}${mobileButton('🔄 本章记忆','closeMobileSheet(); updateCurrentChapterMemoryManual()')}${mobileButton('🧠 长期记忆','closeMobileSheet(); editMemory()')}${mobileButton('📜 历史','closeMobileSheet(); openSnapshotModal()')}${mobileButton('🧐 审稿','closeMobileSheet(); openReviewModal()')}${mobileButton('⚙️ 设置','closeMobileSheet(); openSettings()')}</div><div class="mobile-actions-row" style="margin-top:8px">${mobileButton('📚 全文总览','closeMobileSheet(); state.currentChapter=0; switchMobileTab("write")')}${mobileButton('✍️ 修改本章','closeMobileSheet(); openRewriteModal()')}${mobileButton('🧐 本章建议','closeMobileSheet(); openChapterReviewModal()')}${mobileButton('ℹ️ 关于','closeMobileSheet(); showAbout()')}</div>`)}
-function openMobileWritingSheet(){const ch=getCurrentChapterForUI();const outlineCh=(state.outline||[]).find(o=>Number(o.chapter)===Number(ch));const points=(outlineCh?.plotPoints||[]).map((pp,i)=>`<div class="mobile-card-sub">${i+1}. ${escapeHtml(pp.text||pp.desc||pp)}</div>`).join('')||'<div class="mobile-card-sub">暂无关键点</div>';const chapterMemory=getChapterMemoryRecord(ch);const memoryPreview=chapterMemory?.content?escapeHtml(chapterMemory.content.slice(0,360))+(chapterMemory.content.length>360?'...':''):'暂无本章记忆';openMobileSheet('写作信息',`<div class="mobile-stack"><div class="mobile-card"><div class="mobile-card-title">剧情关键点</div>${points}</div><div class="mobile-card"><div class="mobile-card-title"><span>本章记忆</span><button class="btn btn-sm" onclick="updateCurrentChapterMemoryManual()">更新</button></div><div class="mobile-card-sub">${memoryPreview}</div></div><div class="mobile-card"><div class="mobile-card-title"><span>本章要求</span><button class="btn btn-sm" onclick="generateChapterNoteManual()">生成</button></div><textarea rows="4" oninput="document.getElementById('chapterNote').value=this.value; syncNotesFromUI(); queueAutoSave()">${escapeHtml(mobileValue('chapterNote'))}</textarea></div><div class="mobile-card"><div class="mobile-card-title"><span>全书要求</span><button class="btn btn-sm" onclick="generateNovelNoteManual()">生成</button></div><textarea rows="4" oninput="document.getElementById('novelNote').value=this.value; syncNotesFromUI(); queueAutoSave()">${escapeHtml(mobileValue('novelNote'))}</textarea></div><div class="mobile-card"><div class="mobile-card-title">更多操作</div><div class="mobile-actions-row">${mobileButton('修改本章','closeMobileSheet(); openRewriteModal()')}${mobileButton('本章专家建议','closeMobileSheet(); openChapterReviewModal()')}</div></div></div>`,mobileButton('关闭','closeMobileSheet()','btn-primary'))}
+function openMobileWritingSheet(){const ch=getCurrentChapterForUI();const outlineCh=(state.outline||[]).find(o=>Number(o.chapter)===Number(ch));const points=(outlineCh?.plotPoints||[]).map((pp,i)=>`<div class="mobile-card-sub">${i+1}. ${escapeHtml(pp.text||pp.desc||pp)}</div>`).join('')||'<div class="mobile-card-sub">暂无关键点</div>';const chapterMemory=getChapterMemoryRecord(ch);const memoryPreview=chapterMemory?.content?escapeHtml(chapterMemory.content.slice(0,360))+(chapterMemory.content.length>360?'...':''):'暂无本章记忆';const continuity=getContinuityBridgeState(ch);const bridge=continuity.bridge&&typeof continuity.bridge==='object'?continuity.bridge:null;const continuityPreview=bridge?escapeHtml(formatContinuityValue(bridge.nextChapterLead||bridge.endingState||bridge.toneCarryover).slice(0,360))||'缓存为空':escapeHtml(continuity.reason||'暂无连贯缓存');openMobileSheet('写作信息',`<div class="mobile-stack"><div class="mobile-card"><div class="mobile-card-title">剧情关键点</div>${points}</div><div class="mobile-card"><div class="mobile-card-title"><span>本章记忆</span><button class="btn btn-sm" onclick="updateCurrentChapterMemoryManual()">更新</button></div><div class="mobile-card-sub">${memoryPreview}</div></div><div class="mobile-card"><div class="mobile-card-title"><span>连贯缓存 · ${escapeHtml(continuity.status)}</span><button class="btn btn-sm" onclick="refreshContinuityCacheManual()">刷新</button></div><div class="mobile-card-sub">${continuityPreview}</div></div><div class="mobile-card"><div class="mobile-card-title"><span>本章要求</span><button class="btn btn-sm" onclick="generateChapterNoteManual()">生成</button></div><textarea rows="4" oninput="document.getElementById('chapterNote').value=this.value; syncNotesFromUI(); queueAutoSave()">${escapeHtml(mobileValue('chapterNote'))}</textarea></div><div class="mobile-card"><div class="mobile-card-title"><span>全书要求</span><button class="btn btn-sm" onclick="generateNovelNoteManual()">生成</button></div><textarea rows="4" oninput="document.getElementById('novelNote').value=this.value; syncNotesFromUI(); queueAutoSave()">${escapeHtml(mobileValue('novelNote'))}</textarea></div><div class="mobile-card"><div class="mobile-card-title">更多操作</div><div class="mobile-actions-row">${mobileButton('修改本章','closeMobileSheet(); openRewriteModal()')}${mobileButton('本章专家建议','closeMobileSheet(); openChapterReviewModal()')}</div></div></div>`,mobileButton('关闭','closeMobileSheet()','btn-primary'))}
 function openMobileRulesSheet(){const cr=state.creativeRules||{};openMobileSheet('创作规则',`<div class="mobile-form-grid"><div><label>叙事视角</label><select onchange="setNarrativePOV(this.value); renderMobileApp()"><option value="">不指定</option>${Object.entries(POV_LABELS).map(([k,v])=>`<option value="${k}" ${cr.narrativePOV===k?'selected':''}>${escapeHtml(v)}</option>`).join('')}</select></div><div><label>基调氛围</label><textarea rows="3" oninput="document.getElementById('toneAtmosphere').value=this.value; state.creativeRules.toneAtmosphere=this.value; queueAutoSave()">${escapeHtml(mobileValue('toneAtmosphere'))}</textarea></div><div><label>写作风格约束</label><textarea rows="3" oninput="document.getElementById('styleConstraints').value=this.value; state.creativeRules.styleConstraints=this.value; queueAutoSave()">${escapeHtml(mobileValue('styleConstraints'))}</textarea></div><div><label>禁止事项</label><textarea rows="3" oninput="document.getElementById('forbiddenItems').value=this.value; state.creativeRules.forbiddenItems=this.value; queueAutoSave()">${escapeHtml(mobileValue('forbiddenItems'))}</textarea></div><div><label>引用手法</label><textarea rows="4" oninput="document.getElementById('citationTechniques').value=this.value; state.creativeRules.citationTechniques=this.value; queueAutoSave()">${escapeHtml(mobileValue('citationTechniques'))}</textarea></div><div><label>大师洞察</label><textarea rows="4" oninput="document.getElementById('masterInsights').value=this.value; state.creativeRules.masterInsights=this.value; queueAutoSave()">${escapeHtml(mobileValue('masterInsights'))}</textarea></div></div>`,mobileButton('保存','saveEditableStateNow(); renderMobileApp(); closeMobileSheet()','btn-primary'))}
 function openMobileReferenceSheet(){openMobileSheet('参考文本',`<div class="mobile-form-grid"><div><label>参考文本</label><textarea rows="10" oninput="document.getElementById('referenceText').value=this.value; state.referenceText=this.value; updateReferenceTextCount(); queueAutoSave()">${escapeHtml(state.referenceText||mobileValue('referenceText'))}</textarea></div><div class="mobile-card-sub">只在你点击分析类按钮时发送给 AI。</div><div class="mobile-actions-row">${mobileButton('生成写作卡片','document.getElementById(\"referenceText\").value=document.querySelector(\"#mobileSheetBody textarea\").value; state.referenceText=document.getElementById(\"referenceText\").value; analyzeReferenceWork()','btn-primary')}${mobileButton('生成引用手法','document.getElementById(\"referenceText\").value=document.querySelector(\"#mobileSheetBody textarea\").value; state.referenceText=document.getElementById(\"referenceText\").value; generateReferenceField(\"citation\")')}</div><div class="mobile-actions-row" style="margin-top:8px">${mobileButton('生成大师洞察','document.getElementById(\"referenceText\").value=document.querySelector(\"#mobileSheetBody textarea\").value; state.referenceText=document.getElementById(\"referenceText\").value; generateReferenceField(\"insights\")')}${mobileButton('导入文本','document.getElementById(\"referenceImportFile\").click()')}</div></div>`,mobileButton('关闭','saveEditableStateNow(); renderMobileApp(); closeMobileSheet()','btn-primary'))}
 function openMobileCardsSheet(){ensureCreativeData();const cards=state.methodologyCards||[];const active=getActiveMethodologyCard();const list=cards.length?cards.map((card,i)=>`<div class="mobile-card"><div class="mobile-card-title"><span>${escapeHtml(card.name||`写作卡片 ${i+1}`)}</span><button class="btn btn-sm" onclick="state.activeMethodologyCardId='${card.id}'; openMobileCardsSheet()">选择</button></div><div class="mobile-card-sub">${escapeHtml((card.cardText||'空卡片').slice(0,220))}</div><div class="mobile-actions-row" style="margin-top:8px">${mobileButton(card.enabledForOutline?'用于大纲 ✓':'用于大纲','toggleMethodologyCard("'+card.id+'","outline",'+(!card.enabledForOutline)+'); openMobileCardsSheet()')}${mobileButton(card.enabledForChapter?'用于正文 ✓':'用于正文','toggleMethodologyCard("'+card.id+'","chapter",'+(!card.enabledForChapter)+'); openMobileCardsSheet()')}</div></div>`).join(''):'<div class="mobile-card mobile-card-sub">暂无写作卡片</div>';openMobileSheet('写作卡片',`<div class="mobile-stack"><div class="mobile-card"><div class="mobile-card-title">当前卡片</div><div class="mobile-form-grid"><div><label>卡片名称</label><input value="${mobileEscapeAttr(active?.name||'')}" oninput="document.getElementById('methodologyCardName').value=this.value; syncActiveMethodologyCardFromUI(); queueAutoSave()"></div><div><label>卡片内容</label><textarea rows="8" oninput="document.getElementById('methodologyCardText').value=this.value; syncActiveMethodologyCardFromUI(); queueAutoSave()">${escapeHtml(active?.cardText||'')}</textarea></div></div><div class="mobile-actions-row" style="margin-top:8px">${mobileButton('新建卡片','newMethodologyCard(); openMobileCardsSheet()')}${mobileButton('保存卡片','saveMethodologyCard(); openMobileCardsSheet()','btn-primary')}</div></div>${list}</div>`,mobileButton('关闭','closeMobileSheet(); renderMobileApp()','btn-primary'))}
@@ -3782,7 +3813,7 @@ function ensureSettingsFooterLinks(){
   const actions = modal.querySelector('.modal-actions');
   const html = `
     <div id="settingsFooterLinks" style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;font-size:.78rem">
-      <a href="./novel-writer-V4.3.12-exG-manual.html" download>下载此工具</a>
+      <a href="./novel-writer-V4.3.13-exG-manual.html" download>下载此工具</a>
       <a href="https://github.com/nanbo0ne/v4exG" target="_blank" rel="noopener noreferrer">项目仓库地址</a>
     </div>
   `;
@@ -4693,6 +4724,8 @@ function stopAutoGen(){
   state.autoGenerating = false;
   state.lastMemoryPromise = null;
   state.lastBridgePromise = null;
+  state.lastMemoryTask = null;
+  state.lastBridgeTask = null;
   state.abortController = null;
   document.getElementById('autoGenPanel').style.display = 'none';
   document.getElementById('autoGenOverlay').style.display = 'none';
@@ -4745,6 +4778,8 @@ function autoGenerateAll(){
   if(notesToggle) notesToggle.checked = state.autoGenerateNotes !== false;
   const memoryToggle = document.getElementById('agMemoryUpdate');
   if(memoryToggle) memoryToggle.checked = state.autoUpdateMemory !== false;
+  const clearNotesToggle = document.getElementById('agClearNotes');
+  if(clearNotesToggle) clearNotesToggle.checked = false;
   ensureAutoGenLengthControls();
   const lengthInput = document.querySelector(`#autoGenPreModal input[name="agAutoLengthMode"][value="${state.selectedLength || 'medium'}"]`);
   if(lengthInput) lengthInput.checked = true;
@@ -4922,6 +4957,7 @@ async function startAutoGen(){
   state.selectedLength = document.querySelector('#autoGenPreModal input[name="agAutoLengthMode"]:checked')?.value || state.selectedLength || 'medium';
   const clearOutline = document.getElementById('agClearOutline').checked;
   const clearChapters = document.getElementById('agClearChapters').checked;
+  const clearNotes = document.getElementById('agClearNotes')?.checked === true;
   const doReviewConsistency = document.getElementById('agReviewConsistency')?.checked === true;
   const doReviewExpert = document.getElementById('agReviewExpert')?.checked === true;
   const doReviewExpertApplyAll = document.getElementById('agReviewExpertApplyAll')?.checked === true;
@@ -4944,12 +4980,14 @@ async function startAutoGen(){
       addOperationLog({chapter:c.chapter, type:'auto-clear-chapters', status:'success', beforeCount:countTextChars(c.content || ''), afterCount:0});
     });
     state.chapters = [];
-    clearNotesState({silent:true});
+    state.lastBridgePromise = null;
+    state.lastBridgeTask = null;
     clearMemoryState({silent:true});
     state.reviewReports = {consistency: null, expert: null, chapterSuggestions: {}};
     document.getElementById('chapterEditor').value = '';
     setEditorChapterBinding('');
   }
+  if(clearNotes) clearNotesState({silent:true});
   saveState();
   
   _autoGenStopped = false;
@@ -5030,11 +5068,13 @@ async function startAutoGen(){
           existing.content = state.chapters.find(c => c.chapter === ch)?.content || document.getElementById('chapterEditor').value || existing.content;
         }
         const existingClean = sanitizeGeneratedText(existing.content || '');
-        const bridgeCurrent = existing.bridge?.contentHash === chapterContentHash(existingClean);
+        const bridgeCurrent = existing.bridge?.contentHash === chapterContentHash(existingClean)
+          && existing.bridge?.targetChapter === ch + 1
+          && existing.bridge?.sourceHash === getContinuitySourceHash(ch + 1);
         if(state.chapterContinuity !== false && !bridgeCurrent){
           document.getElementById('autoGenStatus').textContent = `🔗 正在整理第 ${ch}/${totalCh} 章承接信息…`;
           updateAutoGenChapterUI(ch, totalCh, '承接信息');
-          await updateChapterBridge(ch, existingClean, {runId});
+          await updateChapterBridge(ch, existingClean, {runId, targetChapter: ch + 1});
           assertAutoGenRunActive(runId);
         }
         continue;
@@ -5058,8 +5098,14 @@ async function startAutoGen(){
         saveCurrentChapter();
       }
       const finalText = state.chapters.find(c => c.chapter === ch)?.content || document.getElementById('chapterEditor').value || '';
-      if(state.autoUpdateMemory !== false && !state.lastMemoryPromise) state.lastMemoryPromise = updateMemory(ch, finalText, {runId});
-      if(!state.lastBridgePromise && state.chapterContinuity !== false) state.lastBridgePromise = updateChapterBridge(ch, finalText, {runId});
+      if(state.autoUpdateMemory !== false && !state.lastMemoryPromise){
+        state.lastMemoryPromise = updateMemory(ch, finalText, {runId});
+        state.lastMemoryTask = {chapter: ch, promise: state.lastMemoryPromise};
+      }
+      if(!state.lastBridgePromise && state.chapterContinuity !== false){
+        state.lastBridgePromise = updateChapterBridge(ch, finalText, {runId, targetChapter: ch + 1});
+        state.lastBridgeTask = {chapter: ch, targetChapter: ch + 1, promise: state.lastBridgePromise};
+      }
       const memoryPromise = state.lastMemoryPromise || genResult?.memoryPromise;
       if(memoryPromise){
         document.getElementById('autoGenStatus').textContent = `🧠 正在更新第 ${ch}/${totalCh} 章记忆…`;
@@ -5119,6 +5165,8 @@ async function startAutoGen(){
     state.autoGenerating = false;
     state.lastMemoryPromise = null;
     state.lastBridgePromise = null;
+    state.lastMemoryTask = null;
+    state.lastBridgeTask = null;
     state.abortController = null;
     document.getElementById('btnAutoGen').disabled = false;
   }
@@ -5805,6 +5853,7 @@ function renderWriteTab(){
     document.getElementById('chapterNote').value = '';
     document.getElementById('prevChapterRef').textContent = '全文总览模式，不可编辑';
     document.getElementById('prevChapterRef').style.color = 'var(--text2)';
+    renderContinuityCachePanel();
     updateWordCount();
     updateChapterBadge();
     updateChapterProgress();
@@ -5851,6 +5900,7 @@ function renderWriteTab(){
     prevRef.textContent = '这是第一章，无前章内容';
     prevRef.style.color = 'var(--text2)';
   }
+  renderContinuityCachePanel();
   
   // 本章状态指示
   const chData = state.chapters.find(c => c.chapter === ch);
@@ -5903,6 +5953,7 @@ function clearMemoryState(options = {}){
   state.memory = getEmptyMemory();
   state.chapterMemories = {};
   state.lastMemoryPromise = null;
+  state.lastMemoryTask = null;
   if(!options.skipSave) saveState();
   renderMemoryViewer();
   if(!options.silent) toast('记忆已清空');
@@ -5961,6 +6012,8 @@ function clearAllChapters(){
     addOperationLog({chapter:c.chapter, type:'clear-all-chapters', status:'success', beforeCount:countTextChars(c.content || ''), afterCount:0});
   });
   state.chapters = [];
+  state.lastBridgePromise = null;
+  state.lastBridgeTask = null;
   if(state.outline){
     state.outline.forEach(ch => {
       if(ch.plotPoints) ch.plotPoints.forEach(pp => pp.done = false);
@@ -6056,10 +6109,12 @@ function extractJSONObject(text){
 }
 
 function makeLocalBridge(chapterNum, fullText){
+  const targetChapter = Number(chapterNum) + 1;
   const outlineCh = state.outline?.find(o => o.chapter === chapterNum);
   const clean = sanitizeGeneratedText(fullText || '');
   return {
     chapter: chapterNum,
+    targetChapter,
     title: outlineCh?.title || '',
     endingState: clean.slice(-700),
     unresolvedThreads: [],
@@ -6068,6 +6123,7 @@ function makeLocalBridge(chapterNum, fullText){
     toneCarryover: '',
     updatedAt: new Date().toISOString(),
     contentHash: chapterContentHash(clean),
+    sourceHash: getContinuitySourceHash(targetChapter),
     source: 'local'
   };
 }
@@ -6076,6 +6132,51 @@ function bridgeToText(bridge){
   if(!bridge) return '';
   if(typeof bridge === 'string') return bridge;
   try{ return JSON.stringify(bridge, null, 2); }catch(e){ return String(bridge); }
+}
+
+function getContinuityBridgeState(ch){
+  const target = Number(ch);
+  if(!Number.isFinite(target) || target <= 0) return {status:'无前文', reason:'全文总览模式不可用', bridge:null};
+  if(target <= 1) return {status:'无前文', reason:'第 1 章没有上一章', bridge:null};
+  const prev = state.chapters.find(c => Number(c.chapter) === target - 1);
+  if(!prev || !String(prev.content || '').trim()) return {status:'无前文', reason:`第 ${target - 1} 章尚未写作`, bridge:null};
+  const sourceHash = getContinuitySourceHash(target);
+  const contentHash = chapterContentHash(prev.content || '');
+  const bridge = prev.bridge || null;
+  if(!bridge) return {status:'未生成', reason:'尚未整理上一章承接信息', bridge:null, sourceHash, contentHash, prev};
+  const valid = bridge.targetChapter === target && bridge.sourceHash === sourceHash && bridge.contentHash === contentHash;
+  return {status: valid ? '已同步' : '需刷新', reason: valid ? '当前缓存与前文一致' : '前文或上一章内容已变化', bridge, sourceHash, contentHash, prev};
+}
+
+function formatContinuityValue(value){
+  if(Array.isArray(value)) return value.map(v => typeof v === 'object' ? JSON.stringify(v) : String(v)).filter(Boolean).join('；');
+  if(value && typeof value === 'object') return JSON.stringify(value);
+  return String(value || '').trim();
+}
+
+function renderContinuityCachePanel(){
+  const panel = document.getElementById('continuityCachePanel');
+  const statusEl = document.getElementById('continuityCacheStatus');
+  if(!panel || !statusEl) return;
+  const info = getContinuityBridgeState(state.currentChapter);
+  statusEl.textContent = info.status;
+  statusEl.style.color = info.status === '已同步' ? 'var(--success)' : (info.status === '需刷新' ? 'var(--danger)' : 'var(--text2)');
+  const bridge = info.bridge && typeof info.bridge === 'object' ? info.bridge : null;
+  if(!bridge){
+    panel.innerHTML = `<div style="padding:6px 4px;color:var(--text2)">${escapeHtml(info.reason || '暂无连贯缓存')}</div>`;
+    return;
+  }
+  const rows = [
+    ['上一章结尾', bridge.endingState],
+    ['未解线索', bridge.unresolvedThreads],
+    ['人物承接', bridge.characterContinuity],
+    ['下一章引导', bridge.nextChapterLead],
+    ['情绪延续', bridge.toneCarryover],
+  ].map(([label, value]) => {
+    const text = formatContinuityValue(value);
+    return text ? `<div style="margin-bottom:6px"><b style="color:var(--text)">${label}：</b>${escapeHtml(text)}</div>` : '';
+  }).join('');
+  panel.innerHTML = `${rows || '<div style="padding:6px 4px;color:var(--text2)">缓存为空</div>'}<div style="font-size:.68rem;color:var(--text2);border-top:1px solid var(--border);padding-top:4px;margin-top:6px">${escapeHtml(info.reason || '')}</div>`;
 }
 
 function buildContinuityPrompt(ch){
@@ -6102,12 +6203,18 @@ async function updateChapterBridge(chapterNum, fullText, options = {}){
   if(options.runId !== undefined) assertAutoGenRunActive(options.runId);
   const cleanText = sanitizeGeneratedText(fullText || '');
   if(!cleanText.trim()) return null;
+  const targetChapter = Number(options.targetChapter || (Number(chapterNum) + 1));
   const contentHash = chapterContentHash(cleanText);
+  const sourceHash = getContinuitySourceHash(targetChapter);
   const outlineCh = state.outline?.find(o => o.chapter === chapterNum);
   const chapterData = state.chapters.find(c => c.chapter === chapterNum);
   const fallback = makeLocalBridge(chapterNum, cleanText);
   const saveBridge = (bridge) => {
-    if(bridge && typeof bridge === 'object') bridge.contentHash = contentHash;
+    if(bridge && typeof bridge === 'object'){
+      bridge.contentHash = contentHash;
+      bridge.targetChapter = targetChapter;
+      bridge.sourceHash = sourceHash;
+    }
     const idx = state.chapters.findIndex(c => c.chapter === chapterNum);
     if(idx >= 0){
       state.chapters[idx].bridge = bridge;
@@ -6116,9 +6223,10 @@ async function updateChapterBridge(chapterNum, fullText, options = {}){
       state.chapters.push({chapter: chapterNum, content: cleanText, bridge});
     }
     saveState();
+    if(Number(state.currentChapter) === Number(targetChapter)) renderContinuityCachePanel();
     return bridge;
   };
-  if(chapterData?.bridge?.contentHash === contentHash) return chapterData.bridge;
+  if(chapterData?.bridge?.contentHash === contentHash && chapterData.bridge?.targetChapter === targetChapter && chapterData.bridge?.sourceHash === sourceHash) return chapterData.bridge;
   if(!state.baseURL || !state.model) return saveBridge(fallback);
 
   const points = (outlineCh?.plotPoints || []).map((pp, i) => `${i + 1}. ${pp.desc || pp.description || pp}`).join('\n');
@@ -6144,6 +6252,7 @@ async function updateChapterBridge(chapterNum, fullText, options = {}){
     const parsed = extractJSONObject(result);
     if(parsed && typeof parsed === 'object' && !Array.isArray(parsed)){
       parsed.chapter = chapterNum;
+      parsed.targetChapter = targetChapter;
       parsed.title = outlineCh?.title || '';
       parsed.updatedAt = new Date().toISOString();
       parsed.source = 'ai';
@@ -6634,8 +6743,13 @@ function buildDynamicChapterContext(ch, outlineCh, pps, rawWritePrompt){
 async function waitForManualContextTasks(ch){
   if(state.autoGenerating) return;
   const waits = [];
-  if(state.lastMemoryPromise) waits.push(state.lastMemoryPromise);
-  if(state.chapterContinuity !== false && state.lastBridgePromise) waits.push(state.lastBridgePromise);
+  const target = Number(ch);
+  if(state.lastMemoryTask?.promise && Number(state.lastMemoryTask.chapter) < target) waits.push(state.lastMemoryTask.promise);
+  else if(state.lastMemoryPromise && !state.lastMemoryTask) waits.push(state.lastMemoryPromise);
+  if(state.chapterContinuity !== false){
+    if(state.lastBridgeTask?.promise && Number(state.lastBridgeTask.targetChapter) === target) waits.push(state.lastBridgeTask.promise);
+    else if(state.lastBridgePromise && !state.lastBridgeTask) waits.push(state.lastBridgePromise);
+  }
   if(!waits.length) return;
   updateGeneratingChapterUI(ch, '等待上下文');
   toast('⏳ 正在等待上一章记忆和承接信息整理完成...');
@@ -6649,15 +6763,49 @@ async function prepareManualChapterGeneration(ch){
   const prev = state.chapters.find(c => Number(c.chapter) === prevCh);
   if(!prev || !String(prev.content || '').trim()) return;
   const cleanPrev = sanitizeGeneratedText(prev.content);
-  const bridgeHashCurrent = prev.bridge?.contentHash && prev.bridge.contentHash === chapterContentHash(cleanPrev);
-  if(bridgeHashCurrent) return;
+  const bridgeState = getContinuityBridgeState(ch);
+  if(bridgeState.status === '已同步') return;
   updateGeneratingChapterUI(ch, '整理连贯信息');
   toast(`🔗 正在整理第 ${prevCh} 章承接信息...`);
-  const bridge = await updateChapterBridge(prevCh, cleanPrev, {signal: state.abortController?.signal});
+  const bridge = await updateChapterBridge(prevCh, cleanPrev, {signal: state.abortController?.signal, targetChapter: Number(ch)});
   if(bridge && typeof bridge === 'object'){
     bridge.contentHash = chapterContentHash(cleanPrev);
+    bridge.targetChapter = Number(ch);
+    bridge.sourceHash = getContinuitySourceHash(ch);
     prev.bridge = bridge;
     saveState();
+    renderContinuityCachePanel();
+  }
+}
+
+async function refreshContinuityCacheManual(){
+  const ch = Number(state.currentChapter || 0);
+  if(ch <= 0){ toast('全文总览模式不能刷新连贯缓存'); return; }
+  if(ch <= 1){ toast('第 1 章没有前文可刷新'); return; }
+  if(state.generating){ toast('正在生成中，请稍后再刷新连贯缓存'); return; }
+  const prevCh = ch - 1;
+  const prev = state.chapters.find(c => Number(c.chapter) === prevCh);
+  if(!prev || !String(prev.content || '').trim()){
+    toast(`第 ${prevCh} 章尚未写作，无法刷新连贯缓存`);
+    renderContinuityCachePanel();
+    return;
+  }
+  state.generating = true;
+  state.abortController = new AbortController();
+  showStopButton();
+  updateGeneratingChapterUI(ch, '刷新连贯缓存');
+  toast(`🔄 正在刷新第 ${prevCh} 章 → 第 ${ch} 章连贯缓存...`);
+  try{
+    await updateChapterBridge(prevCh, prev.content, {signal: state.abortController.signal, targetChapter: ch});
+    renderContinuityCachePanel();
+    if(typeof isMobileLayout === 'function' && isMobileLayout()) renderMobileApp();
+    toast('✅ 连贯缓存已刷新');
+  }catch(e){
+    if(e.name !== 'AbortError') toast('刷新连贯缓存失败：' + e.message);
+  }finally{
+    state.generating = false;
+    state.abortController = null;
+    hideStopButton();
   }
 }
 
@@ -6791,6 +6939,8 @@ async function generateChapter(){
     await prepareManualChapterGeneration(ch);
     state.lastMemoryPromise = null;
     state.lastBridgePromise = null;
+    state.lastMemoryTask = null;
+    state.lastBridgeTask = null;
     const rawWritePrompt = prompts.write;
     const dynamicChapterContext = buildDynamicChapterContext(ch, outlineCh, pps, rawWritePrompt);
     let prompt = rawWritePrompt
@@ -6950,8 +7100,11 @@ async function generateChapter(){
     // 手动生成保持非阻塞更新；一键生成由 startAutoGen 在最终正文确认后统一更新
     const memoryPromise = state.autoGenerating ? null : updateMemory(ch, currentText);
     state.lastMemoryPromise = memoryPromise;
-    const bridgePromise = (!state.autoGenerating && state.chapterContinuity !== false) ? updateChapterBridge(ch, currentText) : null;
+    state.lastMemoryTask = memoryPromise ? {chapter: ch, promise: memoryPromise} : null;
+    const bridgePromise = (!state.autoGenerating && state.chapterContinuity !== false) ? updateChapterBridge(ch, currentText, {targetChapter: ch + 1}) : null;
     state.lastBridgePromise = bridgePromise;
+    state.lastBridgeTask = bridgePromise ? {chapter: ch, targetChapter: ch + 1, promise: bridgePromise} : null;
+    renderContinuityCachePanel();
     
     const finalCount = currentText.replace(/\s/g,'').length;
     if(autoWriteOn){
@@ -9672,7 +9825,7 @@ const UI = {
 };
 
 function showAbout(){
-  toast('📖 长篇小说写作助手 V4.3.12-exG');
+  toast('📖 长篇小说写作助手 V4.3.13-exG');
 }
 
 function maybeShowOnboarding(){
