@@ -9,7 +9,7 @@
 📄 当前主文件：
 
 ```text
-novel-writer-V4.3.11-exG-manual.html
+novel-writer-V4.3.13-exGL-manual.html
 ```
 
 `index.html` 为 GitHub Pages 入口；移动端版本仍可参考 `V4.3.10-exG-mobile` 系列。
