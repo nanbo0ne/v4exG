@@ -3467,6 +3467,19 @@ function renderDebugLog(){
 
 // ==================== Tab 切换 ====================
 
+function switchTab(tab){
+  state.currentTab = tab;
+  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+  const target = document.getElementById('tab-' + tab);
+  if(target) target.style.display = 'block';
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  const activeBtn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+  if(activeBtn) activeBtn.classList.add('active');
+  if(tab === 'write') renderWriteTab();
+  if(tab === 'export') renderExportTab();
+  if(tab === 'chat') renderChatTab();
+  saveState();
+}
 
 // ==================== 移动端适配已移除 ====================
 function isMobileLayout(){return false}
