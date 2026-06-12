@@ -7594,8 +7594,36 @@ function normalizeReviewIssue(issue, idx = 0){
   };
 }
 
+function resolveReviewChapterNumber(block, fallbackChapter, allowedChapters = null){
+  const candidates = [
+    block?.chapter,
+    block?.chapterNum,
+    block?.chapterNumber,
+    block?.chapterIndex,
+    block?.chapterId,
+  ];
+  for(const value of candidates){
+    const direct = Number(value);
+    if(Number.isFinite(direct) && direct > 0) return Math.floor(direct);
+    const match = String(value || '').match(/第?\s*(\d+)\s*章?/);
+    if(match) return Number(match[1]);
+  }
+  const titleText = String(block?.title || block?.chapterTitle || block?.name || '').trim();
+  if(titleText){
+    const titleMatch = titleText.match(/第?\s*(\d+)\s*章?/);
+    if(titleMatch) return Number(titleMatch[1]);
+    const matchedOutline = (state.outline || []).find(o => {
+      const title = String(o.title || '').trim();
+      return title && (titleText.includes(title) || title.includes(titleText));
+    });
+    if(matchedOutline) return Number(matchedOutline.chapter);
+  }
+  if(Array.isArray(allowedChapters) && allowedChapters.length === 1) return Number(allowedChapters[0]);
+  return Math.max(1, Number(fallbackChapter || state.currentChapter || 1));
+}
+
 function normalizeExpertSuggestion(item, idx = 0, chapterFallback = state.currentChapter){
-  const chapter = Math.max(1, Number(item.chapter || item.chapterNum || chapterFallback || 1));
+  const chapter = resolveReviewChapterNumber(item, chapterFallback);
   return {
     id: item.id || `es-${Date.now()}-${chapter}-${idx}`,
     chapter,
@@ -7882,10 +7910,17 @@ ${buildChapterDigest(chapters, 'long')}
     const data = parseJsonObject(result);
     if(!data || !Array.isArray(data.chapters)) throw new Error('AI 返回格式异常');
     const normalized = {};
-    data.chapters.forEach(chBlock => {
-      const ch = Math.max(1, Number(chBlock.chapter || state.currentChapter || 1));
+    const chapterOrder = chapters.map(c => Number(c.chapter)).filter(ch => Number.isFinite(ch) && ch > 0);
+    data.chapters.forEach((chBlock, blockIdx) => {
+      const fallbackChapter = currentOnly
+        ? state.currentChapter
+        : (chapterOrder[blockIdx] || state.currentChapter || 1);
+      const ch = resolveReviewChapterNumber(chBlock, fallbackChapter, chapterOrder);
       const items = Array.isArray(chBlock.suggestions) ? chBlock.suggestions : [];
-      normalized[String(ch)] = items.map((item, idx) => normalizeExpertSuggestion(item, idx, ch));
+      const key = String(ch);
+      normalized[key] = (normalized[key] || []).concat(
+        items.map((item, idx) => normalizeExpertSuggestion(item, idx, ch))
+      );
     });
     if(currentOnly){
       const key = String(state.currentChapter);
