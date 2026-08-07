@@ -848,6 +848,105 @@ select{cursor:pointer;appearance:auto}
   vertical-align:text-bottom;margin-left:1px;
 }
 
+/* ==================== 全文编辑器与 Agent ==================== */
+.full-editor-shell{
+  height:calc(100vh - 150px);min-height:620px;
+  display:grid;grid-template-columns:minmax(0,1fr) 340px;
+  border:1px solid var(--border);border-radius:8px;overflow:hidden;
+  background:var(--surface);box-shadow:var(--shadow);
+}
+.full-editor-shell.agent-collapsed{grid-template-columns:minmax(0,1fr) 48px}
+.full-editor-main{min-width:0;display:flex;flex-direction:column;background:var(--surface)}
+.full-editor-toolbar{
+  min-height:54px;padding:8px 12px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);
+}
+.full-editor-title{font-size:.95rem;font-weight:700;color:var(--text)}
+.full-editor-subtitle{font-size:.7rem;color:var(--text2);margin-top:1px}
+.full-editor-tools{display:flex;align-items:center;gap:6px;color:var(--text2);font-size:.76rem;white-space:nowrap}
+.full-editor-scroll{flex:1;min-height:0;overflow:auto;padding:28px clamp(18px,4vw,64px);background:var(--surface2)}
+.full-editor-paper{
+  max-width:820px;min-height:100%;margin:0 auto;padding:38px clamp(24px,6vw,72px) 70px;
+  background:var(--surface);border:1px solid var(--border);border-radius:8px;
+}
+.full-editor-empty{padding:70px 20px;text-align:center;color:var(--text2);font-size:.86rem}
+.full-editor-chapter{position:relative}
+.full-editor-divider{
+  border:0;border-top:1px solid rgba(128,128,128,.28);margin:42px 0 22px;
+  pointer-events:none;user-select:none;
+}
+.full-editor-chapter:first-child .full-editor-divider{margin-top:0}
+.full-editor-chapter-title{
+  font-size:1rem;font-weight:700;color:var(--text);margin-bottom:18px;
+  user-select:none;pointer-events:none;
+}
+.full-editor-body{
+  min-height:4.2em;outline:none;white-space:pre-wrap;word-break:break-word;
+  font-size:18px;line-height:1.95;color:var(--text);letter-spacing:0;
+  caret-color:var(--accent);padding:2px 0 10px;
+}
+.full-editor-body:empty::before{content:'本章尚无正文';color:var(--text2);opacity:.55;pointer-events:none}
+.full-editor-body:focus{background:rgba(184,134,11,.025)}
+.full-editor-chapter.agent-locate{animation:agentLocate 1.6s ease}
+@keyframes agentLocate{0%,100%{background:transparent}35%{background:rgba(184,134,11,.14)}}
+.agent-sidebar{
+  min-width:0;border-left:1px solid var(--border);display:flex;flex-direction:column;
+  background:var(--surface);overflow:hidden;
+}
+.agent-head{min-height:54px;padding:8px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.agent-head-title{font-size:.86rem;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agent-collapsed .agent-head{padding:8px 5px;justify-content:center}
+.agent-collapsed .agent-head-title,.agent-collapsed .agent-head-actions,.agent-collapsed .agent-body{display:none}
+.agent-head-actions{display:flex;gap:4px;align-items:center}
+.agent-icon-btn{width:32px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.agent-body{min-height:0;flex:1;display:flex;flex-direction:column}
+.agent-mode-row{padding:8px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.agent-mode-row .auto-toggle{font-size:.74rem;margin:0}
+.agent-messages{flex:1;min-height:150px;overflow:auto;padding:12px 10px;display:flex;flex-direction:column;gap:9px;background:var(--chat-bg)}
+.agent-message{font-size:.78rem;line-height:1.65;padding:8px 10px;border:1px solid var(--border);border-radius:7px;background:var(--chat-msg-bg);white-space:pre-wrap;word-break:break-word}
+.agent-message.user{align-self:flex-end;max-width:88%;background:var(--accent2);border-color:var(--accent2);color:#fff}
+.agent-message.assistant{align-self:stretch}
+.agent-message.system{font-size:.72rem;color:var(--text2);background:var(--surface2)}
+.agent-working{display:inline-flex;align-items:center;gap:6px;color:var(--text2);font-size:.74rem}
+.agent-working::before{content:'';width:8px;height:8px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+.agent-plan,.agent-pending{padding:10px;border-top:1px solid var(--border);background:var(--surface);max-height:38%;overflow:auto}
+.agent-plan[hidden],.agent-pending[hidden]{display:none}
+.agent-panel-title{font-size:.78rem;font-weight:700;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.agent-plan-step{display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:start;margin-bottom:6px}
+.agent-plan-step input[type=text]{padding:5px 7px;font-size:.72rem}
+.agent-patch{border:1px solid var(--border);border-radius:6px;padding:7px;margin-bottom:6px;background:var(--surface2)}
+.agent-patch-head{display:flex;align-items:center;gap:6px;font-size:.7rem;font-weight:700;margin-bottom:4px}
+.agent-patch-diff{font-family:var(--mono);font-size:.67rem;line-height:1.45;white-space:pre-wrap;max-height:110px;overflow:auto}
+.agent-patch-old{color:var(--danger)}
+.agent-patch-new{color:var(--success)}
+.agent-input-wrap{padding:9px 10px;border-top:1px solid var(--border);background:var(--surface)}
+.agent-input-row{display:flex;align-items:flex-end;gap:6px}
+.agent-input-row textarea{min-height:58px;max-height:120px;resize:vertical;padding:7px 9px;font-size:.78rem}
+.agent-scope-hint{font-size:.68rem;color:var(--text2);margin-bottom:5px;min-height:1.4em}
+.agent-float-send{position:fixed;z-index:215;display:none;padding:5px 9px;font-size:.72rem;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.agent-float-send.show{display:inline-flex}
+.agent-permission-list{max-height:44vh;overflow:auto;border:1px solid var(--border);border-radius:6px;padding:6px;background:var(--bg)}
+.agent-permission-item{display:flex;align-items:center;gap:7px;padding:6px 7px;margin:0;border-bottom:1px solid var(--border);font-size:.78rem;font-weight:400}
+.agent-permission-item:last-child{border-bottom:0}
+.agent-permission-item span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.agent-history-overlay{position:fixed;inset:0;z-index:245;display:none;justify-content:flex-end;background:rgba(0,0,0,.28)}
+.agent-history-overlay.show{display:flex}
+.agent-history-panel{width:min(620px,94vw);height:100%;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column}
+.agent-history-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.agent-history-list{flex:1;overflow:auto;padding:12px}
+.agent-history-batch{border:1px solid var(--border);border-radius:7px;margin-bottom:10px;padding:10px;background:var(--surface2)}
+.agent-history-meta{font-size:.68rem;color:var(--text2);margin:3px 0 8px}
+.agent-history-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.debug-mode-setting{display:none!important}
+body.debug-mode .debug-mode-setting{display:block!important}
+
+@media(max-width:900px){
+  .full-editor-shell{grid-template-columns:minmax(0,1fr) 300px}
+  .full-editor-shell.agent-collapsed{grid-template-columns:minmax(0,1fr) 48px}
+  .full-editor-scroll{padding-left:12px;padding-right:12px}
+  .full-editor-paper{padding-left:22px;padding-right:22px}
+}
+
 /* ==================== 导出区 ==================== */
 .export-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .export-card{
@@ -950,6 +1049,7 @@ body.debug-mode .debug-only{display:inline-flex!important}
     <button class="tab-btn" data-tab="outline" onclick="switchTab('outline')">📑 大纲</button>
     <button class="tab-btn" data-tab="write" onclick="switchTab('write')">✍️ 写作 <span class="badge" id="chBadge">0</span></button>
     <button class="tab-btn" data-tab="chat" onclick="switchTab('chat')">💬 对话</button>
+    <button class="tab-btn" data-tab="editor" onclick="switchTab('editor')">✏️ 编辑</button>
     <button class="tab-btn" data-tab="export" onclick="switchTab('export')">📦 导出</button>
   </div>
 
@@ -1588,6 +1688,59 @@ body.debug-mode .debug-only{display:inline-flex!important}
     </div>
   </div>
 
+  <!-- ====== 全文编辑器 Tab ====== -->
+  <div class="tab-content" id="tab-editor" style="display:none">
+    <div class="full-editor-shell" id="fullEditorShell">
+      <section class="full-editor-main">
+        <div class="full-editor-toolbar">
+          <div>
+            <div class="full-editor-title" id="fullEditorTitle">全文编辑</div>
+            <div class="full-editor-subtitle" id="fullEditorSubtitle">自动保存</div>
+          </div>
+          <div class="full-editor-tools">
+            <span id="fullEditorCharCount">0 字</span>
+            <button class="btn btn-sm agent-icon-btn" type="button" onclick="adjustFullEditorFont(-1)" title="减小正文字号">A-</button>
+            <button class="btn btn-sm agent-icon-btn" type="button" onclick="adjustFullEditorFont(1)" title="增大正文字号">A+</button>
+          </div>
+        </div>
+        <div class="full-editor-scroll" id="fullEditorScroll">
+          <article class="full-editor-paper" id="fullEditorPaper"></article>
+        </div>
+      </section>
+      <aside class="agent-sidebar" id="editorAgentSidebar">
+        <div class="agent-head">
+          <button class="btn btn-sm agent-icon-btn" type="button" onclick="toggleEditorAgent()" title="展开或收起 Agent">◫</button>
+          <div class="agent-head-title">AI Agent</div>
+          <div class="agent-head-actions">
+            <button class="btn btn-sm agent-icon-btn" type="button" onclick="openAgentHistory()" title="修改记录">↶</button>
+            <button class="btn btn-sm agent-icon-btn" type="button" onclick="openAgentPermissions()" title="章节权限">⚙</button>
+          </div>
+        </div>
+        <div class="agent-body">
+          <div class="agent-mode-row">
+            <label class="auto-toggle">
+              <input type="checkbox" id="agentPlanToggle" onchange="setAgentPlanMode(this.checked)">
+              <span class="toggle-track"></span>
+              <span class="toggle-label">计划模式</span>
+            </label>
+            <button class="btn btn-sm" type="button" onclick="clearEditorAgentChat()" title="清空 Agent 对话">清空</button>
+          </div>
+          <div class="agent-messages" id="editorAgentMessages"></div>
+          <div class="agent-plan" id="editorAgentPlan" hidden></div>
+          <div class="agent-pending" id="editorAgentPending" hidden></div>
+          <div class="agent-input-wrap">
+            <div class="agent-scope-hint" id="editorAgentScope">未选择文本，Agent 默认不会直接改动全文</div>
+            <div class="agent-input-row">
+              <textarea id="editorAgentInput" rows="2" placeholder="告诉 Agent 需要修改或检查什么"></textarea>
+              <button class="btn btn-primary" id="editorAgentSend" type="button" onclick="sendEditorAgentMessage()">发送</button>
+              <button class="btn" id="editorAgentStop" type="button" onclick="stopEditorAgent()" style="display:none" title="停止 Agent">■</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
   <!-- ====== 导出 Tab ====== -->
   <div class="tab-content" id="tab-export" style="display:none">
     <div class="card">
@@ -1683,7 +1836,7 @@ body.debug-mode .debug-only{display:inline-flex!important}
     </div>
     <div class="mb12" id="modelInfo" style="font-size:.78rem;color:var(--text2)"></div>
     <!-- ====== 主题模式切换 ====== -->
-    <div class="mb12" style="padding:10px 0;border-top:1px solid var(--border)">
+    <div class="mb12 debug-mode-setting" id="encryptedModeSettings" style="padding:10px 0;border-top:1px solid var(--border)">
       <label style="font-size:.86rem;font-weight:600;color:var(--text2);margin-bottom:8px">🎭 模式设置</label>
       <div class="theme-slider" id="themeSlider">
         <div class="theme-track theme-track-4" onclick="switchTheme(event)">
@@ -1914,6 +2067,48 @@ body.debug-mode .debug-only{display:inline-flex!important}
   </aside>
 </div>
 
+<div class="modal-overlay" id="agentPermissionModal" onclick="closeAgentPermissions(event)">
+  <div class="modal" style="max-width:620px;width:92vw" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeAgentPermissions()">✕</button>
+    <h2>Agent 编辑权限</h2>
+    <p style="font-size:.78rem;color:var(--text2);margin-bottom:10px">未勾选的章节仍可读取，但 Agent 无法写入。</p>
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      <button class="btn btn-sm" type="button" onclick="setAllAgentChapterPermissions(true)">全选</button>
+      <button class="btn btn-sm" type="button" onclick="setAllAgentChapterPermissions(false)">全不选</button>
+    </div>
+    <div class="agent-permission-list" id="agentPermissionList"></div>
+    <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px">
+      <label style="margin-bottom:8px">修改方式</label>
+      <div class="row" style="margin-bottom:0">
+        <label class="btn" style="display:flex;align-items:center;justify-content:center;margin:0;cursor:pointer">
+          <input type="radio" name="agentApplyMode" value="confirm" onchange="setAgentApplyMode(this.value)">修改前询问
+        </label>
+        <label class="btn" style="display:flex;align-items:center;justify-content:center;margin:0;cursor:pointer">
+          <input type="radio" name="agentApplyMode" value="direct" onchange="setAgentApplyMode(this.value)">AI 直接修改
+        </label>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeAgentPermissions()">完成</button>
+    </div>
+  </div>
+</div>
+
+<div class="agent-history-overlay" id="agentHistoryOverlay" onclick="closeAgentHistory(event)">
+  <aside class="agent-history-panel" role="dialog" aria-modal="true" aria-label="Agent 修改记录" onclick="event.stopPropagation()">
+    <div class="agent-history-head">
+      <div>
+        <h2 style="font-size:1rem">修改记录</h2>
+        <p id="agentHistoryCount" style="font-size:.7rem;color:var(--text2)">最近 0 次修改</p>
+      </div>
+      <button class="btn btn-sm agent-icon-btn" onclick="closeAgentHistory()" title="关闭">×</button>
+    </div>
+    <div class="agent-history-list" id="agentHistoryList"></div>
+  </aside>
+</div>
+
+<button class="btn btn-primary agent-float-send" id="agentFloatSend" type="button" onclick="focusSelectionInAgent()">交给 Agent</button>
+
 <!-- ====== Toast ====== -->
 <div class="toast" id="toast"></div>
 
@@ -2127,7 +2322,7 @@ THEME_PROMPTS_EXG.outlineContinue = OUTLINE_CONTINUE_PROMPTS.exg;
 // ==================== 状态 ====================
 const STORAGE_KEY = 'novelWriterState';
 const IDB_NAME = 'novelWriterDB';
-const IDB_VERSION = 3;
+const IDB_VERSION = 4;
 const MIGRATION_KEY = 'novelWriterMigratedToIDB';
 const REFERENCE_LIMIT = 100000;
 
@@ -2237,6 +2432,17 @@ let state = {
   activeChatId: 'chat0',
   chatIncludeOutline: false,
   chatIncludeChapters: false,
+  editorAgent: {
+    fontSize: 18,
+    collapsed: false,
+    planMode: false,
+    applyMode: 'confirm',
+    deniedChapters: [],
+    messages: [],
+    currentPlan: null,
+    pendingBatch: null,
+  },
+  agentEditHistory: [],
   uiDrafts: { rewriteInstruction: '', chatInput: '' },
 };
 
@@ -2256,6 +2462,7 @@ const DB = {
         if(!db.objectStoreNames.contains('methodologyCards')) db.createObjectStore('methodologyCards', {keyPath:'id'});
         if(!db.objectStoreNames.contains('chapterSnapshots')) db.createObjectStore('chapterSnapshots', {keyPath:'id'});
         if(!db.objectStoreNames.contains('operationLogs')) db.createObjectStore('operationLogs', {keyPath:'id'});
+        if(!db.objectStoreNames.contains('agentEditHistory')) db.createObjectStore('agentEditHistory', {keyPath:'id'});
       };
       req.onsuccess = () => { this.db = req.result; resolve(this.db); };
       req.onerror = () => reject(req.error);
@@ -2300,7 +2507,7 @@ const Store = {
   saving: null,
   snapshot(){
     return {
-      schemaVersion: 4,
+      schemaVersion: 5,
       baseURL: state.baseURL,
       apiKey: state.apiKey,
       model: state.model,
@@ -2327,6 +2534,7 @@ const Store = {
       topPDefault: state.topPDefault,
       chatIncludeOutline: state.chatIncludeOutline,
       chatIncludeChapters: state.chatIncludeChapters,
+      editorAgent: state.editorAgent,
       uiDrafts: state.uiDrafts,
       themeMode: state.themeMode,
       colorThemeMode: state.colorThemeMode,
@@ -2393,6 +2601,19 @@ const Store = {
     merged.debugEggClicks = Math.max(0, Math.min(8, Number(merged.debugEggClicks) || 0));
     if(!Array.isArray(merged.debugPromptLogs)) merged.debugPromptLogs = [];
     if(!merged.debugMode) merged.debugPromptLogs = [];
+    if(!merged.editorAgent || typeof merged.editorAgent !== 'object' || Array.isArray(merged.editorAgent)){
+      merged.editorAgent = structuredClone(defaults.editorAgent);
+    }
+    if(!['confirm','direct'].includes(merged.editorAgent.applyMode)) merged.editorAgent.applyMode = 'confirm';
+    if(!Array.isArray(merged.editorAgent.deniedChapters)) merged.editorAgent.deniedChapters = [];
+    merged.editorAgent.deniedChapters = Array.from(new Set(merged.editorAgent.deniedChapters.map(Number).filter(n => Number.isFinite(n) && n > 0)));
+    if(!Array.isArray(merged.editorAgent.messages)) merged.editorAgent.messages = [];
+    merged.editorAgent.messages = merged.editorAgent.messages.slice(-100);
+    if(typeof merged.editorAgent.fontSize !== 'number') merged.editorAgent.fontSize = 18;
+    merged.editorAgent.fontSize = Math.max(14, Math.min(28, merged.editorAgent.fontSize));
+    if(typeof merged.editorAgent.collapsed !== 'boolean') merged.editorAgent.collapsed = false;
+    if(typeof merged.editorAgent.planMode !== 'boolean') merged.editorAgent.planMode = false;
+    if(!Array.isArray(merged.agentEditHistory)) merged.agentEditHistory = [];
     if(!merged.memoryTrust || typeof merged.memoryTrust !== 'object' || Array.isArray(merged.memoryTrust)){
       merged.memoryTrust = {};
     }
@@ -2414,6 +2635,7 @@ const Store = {
       loaded.methodologyCards = await DB.getAll('methodologyCards');
       loaded.chapterSnapshots = await DB.getAll('chapterSnapshots');
       loaded.operationLogs = await DB.getAll('operationLogs');
+      loaded.agentEditHistory = await DB.getAll('agentEditHistory');
       state = this.normalize(loaded);
       state.chapters.sort((a,b) => (a.chapter || 0) - (b.chapter || 0));
       if(!state.chatWindows || state.chatWindows.length === 0){
@@ -2459,6 +2681,10 @@ const Store = {
       await DB.clear('operationLogs');
       for(const log of state.operationLogs || []){
         await DB.put('operationLogs', log);
+      }
+      await DB.clear('agentEditHistory');
+      for(const batch of (state.agentEditHistory || []).slice(0, 200)){
+        await DB.put('agentEditHistory', batch);
       }
     }catch(e){
       console.warn('IndexedDB save error:', e);
@@ -2918,6 +3144,17 @@ function getDefaultState(){
     activeChatId: 'chat0',
     chatIncludeOutline: false,
     chatIncludeChapters: false,
+    editorAgent: {
+      fontSize: 18,
+      collapsed: false,
+      planMode: false,
+      applyMode: 'confirm',
+      deniedChapters: [],
+      messages: [],
+      currentPlan: null,
+      pendingBatch: null,
+    },
+    agentEditHistory: [],
     uiDrafts: { rewriteInstruction: '', chatInput: '' },
     themeMode: 'normal',
     colorThemeMode: 'auto',
@@ -3536,6 +3773,9 @@ function renderDebugLog(){
 // ==================== Tab 切换 ====================
 
 function switchTab(tab){
+  const previousTab = state.currentTab;
+  if(previousTab === 'write' && tab !== 'write') saveCurrentChapter();
+  if(previousTab === 'editor' && tab !== 'editor') syncFullEditorToState();
   state.currentTab = tab;
   document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
   const target = document.getElementById('tab-' + tab);
@@ -3546,6 +3786,7 @@ function switchTab(tab){
   if(tab === 'write') renderWriteTab();
   if(tab === 'export') renderExportTab();
   if(tab === 'chat') renderChatTab();
+  if(tab === 'editor') renderFullEditor();
   saveState();
 }
 
@@ -6717,6 +6958,7 @@ function syncDraftInputsFromUI(){
 }
 
 function syncAllEditableStateFromUI(){
+  if(state.currentTab === 'editor') syncFullEditorToState();
   syncProjectFromUI();
   syncCreativeRulesFromUI();
   syncNotesFromUI();
@@ -9579,10 +9821,12 @@ ${chapters.map(ch => {
         reviewReports: state.reviewReports || {consistency:null, expert:null, chapterSuggestions:{}},
         chapterSnapshots: state.chapterSnapshots || [],
         operationLogs: state.operationLogs || [],
+        editorAgent: state.editorAgent || getDefaultState().editorAgent,
+        agentEditHistory: (state.agentEditHistory || []).slice(0, 200),
         memoryTrust: state.memoryTrust || {},
         savedThemePrompts: state.savedThemePrompts || {},
         outlineActionMode: state.outlineActionMode || 'generate',
-        version: 4,
+        version: 5,
       };
       downloadFile(`${title}_备份.json`, JSON.stringify(backup, null, 2), 'application/json;charset=utf-8');
       toast('💾 项目备份已下载');
@@ -9622,6 +9866,8 @@ function importProject(event){
         state.reviewReports = data.reviewReports || {consistency:null, expert:null, chapterSuggestions:{}};
         state.chapterSnapshots = Array.isArray(data.chapterSnapshots) ? data.chapterSnapshots : [];
         state.operationLogs = Array.isArray(data.operationLogs) ? data.operationLogs : [];
+        state.editorAgent = data.editorAgent && typeof data.editorAgent === 'object' ? data.editorAgent : (state.editorAgent || getDefaultState().editorAgent);
+        state.agentEditHistory = Array.isArray(data.agentEditHistory) ? data.agentEditHistory.slice(0, 200) : [];
         state.memoryTrust = data.memoryTrust || {};
         state.savedThemePrompts = data.savedThemePrompts || state.savedThemePrompts || {};
         state.outlineActionMode = ['generate','continue'].includes(data.outlineActionMode) ? data.outlineActionMode : (state.outlineActionMode || 'generate');
@@ -10023,6 +10269,841 @@ document.addEventListener('keydown', function(e){
   }
 });
 
+// ==================== 全文编辑器与轻量 Agent ====================
+const AGENT_CONTEXT_TOKEN_THRESHOLD = 150000;
+const AGENT_HISTORY_LIMIT = 200;
+const AGENT_MESSAGE_LIMIT = 100;
+const AGENT_TOOL_ROUND_LIMIT = 16;
+const AGENT_WRITE_LIMIT = 50;
+const AGENT_PATCH_TEXT_LIMIT = 6000;
+
+const EDITOR_AGENT_PROMPTS = {
+  normal: `你是小说编辑 Agent。软件已经确认当前全文规模允许按需通读。你可以先读取全文或检索相关章节，再回答或修改。
+安全原则：没有明确扩大范围时，只修改用户当前选中的文字；没有选区且指令含糊时只分析或询问范围。写入只能通过工具完成，必须保持情节事实、人物关系、叙事视角和核心信息。不要声称已经修改尚未通过工具处理的内容。`,
+  long: `你是处理超长小说的编辑 Agent。不要尝试一次读取整部小说。先查看章节目录并根据用户指令自主搜索、定位相关章节；找到目标后读取目标章及前后各一整章，再进行分析或修改。用户不必先点名章节，你应主动定位；如果仍无法确定范围，在回复中温和提示用户指定章节或选中文本可以提高精度。
+安全原则：没有明确扩大范围时，只修改用户当前选中的文字。写入只能通过工具完成，必须保持情节事实、人物关系、叙事视角和核心信息。不要声称已经修改尚未通过工具处理的内容。`,
+};
+
+let fullEditorSelection = null;
+let editorAgentAbortController = null;
+let fullEditorEventsBound = false;
+
+function ensureEditorAgentState(){
+  if(!state.editorAgent || typeof state.editorAgent !== 'object') state.editorAgent = structuredClone(getDefaultState().editorAgent);
+  if(!Array.isArray(state.editorAgent.deniedChapters)) state.editorAgent.deniedChapters = [];
+  if(!Array.isArray(state.editorAgent.messages)) state.editorAgent.messages = [];
+  if(!['confirm','direct'].includes(state.editorAgent.applyMode)) state.editorAgent.applyMode = 'confirm';
+  if(!Array.isArray(state.agentEditHistory)) state.agentEditHistory = [];
+  return state.editorAgent;
+}
+
+function getEditorChapterNumbers(){
+  const projectCount = Math.max(0, Number(state.project?.chapterCount) || 0);
+  const outlineMax = Math.max(0, ...(state.outline || []).map(o => Number(o.chapter) || 0));
+  const chapterMax = Math.max(0, ...(state.chapters || []).map(c => Number(c.chapter) || 0));
+  const total = Math.max(1, projectCount, outlineMax, chapterMax);
+  return Array.from({length:total}, (_,i) => i + 1);
+}
+
+function getEditorChapterTitle(chapter){
+  const outline = (state.outline || []).find(o => Number(o.chapter) === Number(chapter));
+  const title = String(outline?.title || '').trim();
+  return title ? `第 ${chapter} 章 · ${title}` : `第 ${chapter} 章`;
+}
+
+function editorBodyText(body){
+  return String(body?.innerText || '').replace(/\u00a0/g, ' ').replace(/\r\n?/g, '\n');
+}
+
+function updateFullEditorCount(){
+  const chapters = getEditorChapterNumbers();
+  const total = chapters.reduce((sum,ch) => sum + countTextChars(getChapterContent(ch)), 0);
+  const el = document.getElementById('fullEditorCharCount');
+  if(el) el.textContent = total.toLocaleString() + ' 字';
+  const title = document.getElementById('fullEditorTitle');
+  if(title) title.textContent = state.project?.title ? `${state.project.title} · 全文编辑` : '全文编辑';
+  const subtitle = document.getElementById('fullEditorSubtitle');
+  if(subtitle) subtitle.textContent = `共 ${chapters.length} 章 · 自动保存`;
+}
+
+function renderFullEditor(){
+  ensureEditorAgentState();
+  const paper = document.getElementById('fullEditorPaper');
+  if(!paper) return;
+  const chapters = getEditorChapterNumbers();
+  const fontSize = state.editorAgent.fontSize || 18;
+  paper.innerHTML = chapters.map(chapter => `
+    <section class="full-editor-chapter" data-editor-chapter="${chapter}">
+      <hr class="full-editor-divider" contenteditable="false" aria-hidden="true">
+      <h2 class="full-editor-chapter-title" contenteditable="false">${escapeHtml(getEditorChapterTitle(chapter))}</h2>
+      <div class="full-editor-body" data-chapter="${chapter}" contenteditable="plaintext-only" spellcheck="false" style="font-size:${fontSize}px"></div>
+    </section>
+  `).join('');
+  paper.querySelectorAll('.full-editor-body').forEach(body => {
+    body.textContent = getChapterContent(Number(body.dataset.chapter)) || '';
+  });
+  const shell = document.getElementById('fullEditorShell');
+  shell?.classList.toggle('agent-collapsed', !!state.editorAgent.collapsed);
+  const planToggle = document.getElementById('agentPlanToggle');
+  if(planToggle) planToggle.checked = !!state.editorAgent.planMode;
+  updateFullEditorCount();
+  renderEditorAgentMessages();
+  renderEditorAgentPlan();
+  renderEditorAgentPending();
+  bindFullEditorEvents();
+}
+
+function bindFullEditorEvents(){
+  const paper = document.getElementById('fullEditorPaper');
+  const scroll = document.getElementById('fullEditorScroll');
+  if(!paper || !scroll || fullEditorEventsBound) return;
+  fullEditorEventsBound = true;
+  paper.addEventListener('input', event => {
+    const body = event.target.closest?.('.full-editor-body');
+    if(!body) return;
+    const chapter = Number(body.dataset.chapter);
+    setChapterContent(chapter, editorBodyText(body), {skipSanitize:false});
+    updateFullEditorCount();
+    queueAutoSave();
+  });
+  paper.addEventListener('paste', event => {
+    const body = event.target.closest?.('.full-editor-body');
+    if(!body) return;
+    event.preventDefault();
+    const text = event.clipboardData?.getData('text/plain') || '';
+    document.execCommand('insertText', false, text);
+  });
+  paper.addEventListener('mouseup', () => setTimeout(captureFullEditorSelection, 0));
+  paper.addEventListener('keyup', () => setTimeout(captureFullEditorSelection, 0));
+  scroll.addEventListener('wheel', event => {
+    if(!event.ctrlKey) return;
+    event.preventDefault();
+    adjustFullEditorFont(event.deltaY < 0 ? 1 : -1);
+  }, {passive:false});
+  const input = document.getElementById('editorAgentInput');
+  input?.addEventListener('keydown', event => {
+    if(event.key === 'Enter' && !event.shiftKey){
+      event.preventDefault();
+      sendEditorAgentMessage();
+    }
+  });
+}
+
+function syncFullEditorToState(){
+  document.querySelectorAll('#fullEditorPaper .full-editor-body').forEach(body => {
+    setChapterContent(Number(body.dataset.chapter), editorBodyText(body), {skipSanitize:false});
+  });
+  updateFullEditorCount();
+}
+
+function adjustFullEditorFont(delta){
+  ensureEditorAgentState();
+  state.editorAgent.fontSize = Math.max(14, Math.min(28, (Number(state.editorAgent.fontSize) || 18) + delta));
+  document.querySelectorAll('#fullEditorPaper .full-editor-body').forEach(body => body.style.fontSize = state.editorAgent.fontSize + 'px');
+  saveState();
+}
+
+function rangeOffsetWithin(element, node, offset){
+  const range = document.createRange();
+  range.selectNodeContents(element);
+  range.setEnd(node, offset);
+  return range.toString().length;
+}
+
+function captureFullEditorSelection(){
+  if(state.currentTab !== 'editor') return;
+  const selection = window.getSelection();
+  const floatBtn = document.getElementById('agentFloatSend');
+  if(!selection || selection.rangeCount === 0 || selection.isCollapsed){
+    fullEditorSelection = null;
+    floatBtn?.classList.remove('show');
+    updateEditorAgentScope();
+    return;
+  }
+  const range = selection.getRangeAt(0);
+  const startBody = range.startContainer.nodeType === 1 ? range.startContainer.closest?.('.full-editor-body') : range.startContainer.parentElement?.closest('.full-editor-body');
+  const endBody = range.endContainer.nodeType === 1 ? range.endContainer.closest?.('.full-editor-body') : range.endContainer.parentElement?.closest('.full-editor-body');
+  if(!startBody || startBody !== endBody){
+    fullEditorSelection = null;
+    floatBtn?.classList.remove('show');
+    updateEditorAgentScope('跨章节选区不能直接修改，请在单章内选择文字');
+    return;
+  }
+  const text = selection.toString();
+  if(!text.trim()) return;
+  const start = rangeOffsetWithin(startBody, range.startContainer, range.startOffset);
+  const end = rangeOffsetWithin(startBody, range.endContainer, range.endOffset);
+  fullEditorSelection = {
+    chapter:Number(startBody.dataset.chapter), start, end, text,
+    chapterHash:chapterContentHash(editorBodyText(startBody)),
+  };
+  const rect = range.getBoundingClientRect();
+  if(floatBtn){
+    floatBtn.style.left = Math.min(window.innerWidth - 118, Math.max(8, rect.right - 96)) + 'px';
+    floatBtn.style.top = Math.max(8, rect.top - 40) + 'px';
+    floatBtn.classList.add('show');
+  }
+  updateEditorAgentScope();
+}
+
+function updateEditorAgentScope(message){
+  const el = document.getElementById('editorAgentScope');
+  if(!el) return;
+  if(message) el.textContent = message;
+  else if(fullEditorSelection) el.textContent = `已选第 ${fullEditorSelection.chapter} 章 · ${countTextChars(fullEditorSelection.text)} 字，默认只修改选区`;
+  else el.textContent = '未选择文本，Agent 默认不会直接改动全文';
+}
+
+function focusSelectionInAgent(){
+  document.getElementById('agentFloatSend')?.classList.remove('show');
+  updateEditorAgentScope();
+  document.getElementById('editorAgentInput')?.focus();
+}
+
+function toggleEditorAgent(){
+  ensureEditorAgentState();
+  state.editorAgent.collapsed = !state.editorAgent.collapsed;
+  document.getElementById('fullEditorShell')?.classList.toggle('agent-collapsed', state.editorAgent.collapsed);
+  saveState();
+}
+
+function setAgentPlanMode(enabled){
+  ensureEditorAgentState();
+  state.editorAgent.planMode = !!enabled;
+  if(!enabled) state.editorAgent.currentPlan = null;
+  renderEditorAgentPlan();
+  saveState();
+}
+
+function addEditorAgentMessage(role, content){
+  ensureEditorAgentState();
+  state.editorAgent.messages.push({id:makeId('amsg'), role, content:String(content || ''), time:new Date().toLocaleTimeString()});
+  state.editorAgent.messages = state.editorAgent.messages.slice(-AGENT_MESSAGE_LIMIT);
+}
+
+function renderEditorAgentMessages(workingText){
+  const box = document.getElementById('editorAgentMessages');
+  if(!box) return;
+  ensureEditorAgentState();
+  const messages = state.editorAgent.messages || [];
+  box.innerHTML = messages.length ? messages.map(msg => `<div class="agent-message ${escapeHtml(msg.role)}">${escapeHtml(msg.content)}</div>`).join('') : '<div class="agent-message system">Agent 已就绪</div>';
+  if(workingText) box.insertAdjacentHTML('beforeend', `<div class="agent-message system"><span class="agent-working">${escapeHtml(workingText)}</span></div>`);
+  box.scrollTop = box.scrollHeight;
+}
+
+function clearEditorAgentChat(){
+  ensureEditorAgentState();
+  if(!confirm('确定清空 Agent 对话、待审批计划和待应用修改吗？')) return;
+  state.editorAgent.messages = [];
+  state.editorAgent.currentPlan = null;
+  state.editorAgent.pendingBatch = null;
+  renderEditorAgentMessages();
+  renderEditorAgentPlan();
+  renderEditorAgentPending();
+  saveState();
+}
+
+function parseAgentPlan(text){
+  const steps = String(text || '').split(/\n+/).map(line => line.trim().replace(/^[-*•\d.、)\s]+/, '')).filter(Boolean).slice(0, 24);
+  return (steps.length ? steps : [String(text || '按用户要求执行修改')]).map(step => ({id:makeId('plan'), text:step, enabled:true}));
+}
+
+function renderEditorAgentPlan(){
+  const panel = document.getElementById('editorAgentPlan');
+  if(!panel) return;
+  const plan = ensureEditorAgentState().currentPlan;
+  panel.hidden = !plan?.steps?.length;
+  if(panel.hidden){ panel.innerHTML = ''; return; }
+  panel.innerHTML = `<div class="agent-panel-title"><span>执行计划</span><button class="btn btn-sm" onclick="discardAgentPlan()">取消</button></div>
+    ${plan.steps.map((step,index) => `<label class="agent-plan-step"><input type="checkbox" ${step.enabled !== false ? 'checked' : ''} onchange="updateAgentPlanStep(${index},'enabled',this.checked)"><input type="text" value="${escapeHtml(step.text)}" onchange="updateAgentPlanStep(${index},'text',this.value)"></label>`).join('')}
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="approveAgentPlan()">批准执行</button>`;
+}
+
+function updateAgentPlanStep(index, key, value){
+  const step = state.editorAgent?.currentPlan?.steps?.[index];
+  if(!step) return;
+  step[key] = value;
+  saveState();
+}
+
+function discardAgentPlan(){
+  state.editorAgent.currentPlan = null;
+  renderEditorAgentPlan();
+  saveState();
+}
+
+async function approveAgentPlan(){
+  const plan = state.editorAgent?.currentPlan;
+  const enabled = (plan?.steps || []).filter(step => step.enabled !== false && step.text.trim());
+  if(!enabled.length){ toast('请至少保留一个计划步骤'); return; }
+  const instruction = `执行已经批准的计划：\n${enabled.map((step,i) => `${i+1}. ${step.text}`).join('\n')}`;
+  state.editorAgent.currentPlan = null;
+  renderEditorAgentPlan();
+  await runEditorAgent(instruction, {approvedPlan:true, displayUser:false});
+}
+
+function openAgentPermissions(){
+  renderAgentPermissionList();
+  document.getElementById('agentPermissionModal')?.classList.add('show');
+}
+
+function closeAgentPermissions(event){
+  if(event && event.target !== event.currentTarget) return;
+  document.getElementById('agentPermissionModal')?.classList.remove('show');
+  saveState();
+}
+
+function renderAgentPermissionList(){
+  const list = document.getElementById('agentPermissionList');
+  if(!list) return;
+  const denied = new Set(ensureEditorAgentState().deniedChapters.map(Number));
+  list.innerHTML = getEditorChapterNumbers().map(ch => `<label class="agent-permission-item"><input type="checkbox" data-agent-chapter="${ch}" ${denied.has(ch) ? '' : 'checked'} onchange="setAgentChapterPermission(${ch},this.checked)"><span>${escapeHtml(getEditorChapterTitle(ch))}</span></label>`).join('');
+  document.querySelectorAll('input[name="agentApplyMode"]').forEach(input => input.checked = input.value === state.editorAgent.applyMode);
+}
+
+function setAgentChapterPermission(chapter, allowed){
+  const denied = new Set(ensureEditorAgentState().deniedChapters.map(Number));
+  if(allowed) denied.delete(Number(chapter)); else denied.add(Number(chapter));
+  state.editorAgent.deniedChapters = Array.from(denied).sort((a,b)=>a-b);
+  saveState();
+}
+
+function setAllAgentChapterPermissions(allowed){
+  state.editorAgent.deniedChapters = allowed ? [] : getEditorChapterNumbers();
+  renderAgentPermissionList();
+  saveState();
+}
+
+function setAgentApplyMode(mode){
+  if(!['confirm','direct'].includes(mode)) return;
+  ensureEditorAgentState().applyMode = mode;
+  saveState();
+}
+
+function agentCanEditChapter(chapter){
+  return !new Set(ensureEditorAgentState().deniedChapters.map(Number)).has(Number(chapter));
+}
+
+function estimateNovelTokens(){
+  const text = getEditorChapterNumbers().map(ch => getChapterContent(ch)).join('\n');
+  const cjk = (text.match(/[\u3400-\u9fff\uf900-\ufaff]/g) || []).length;
+  const remaining = Math.max(0, text.length - cjk);
+  return cjk + Math.ceil(remaining / 4);
+}
+
+function isAgentLongNovel(){
+  return estimateNovelTokens() > AGENT_CONTEXT_TOKEN_THRESHOLD;
+}
+
+function createAgentRun(allowWrites){
+  const chapters = getEditorChapterNumbers();
+  const working = new Map();
+  const baseHashes = {};
+  chapters.forEach(ch => {
+    const text = getChapterContent(ch) || '';
+    working.set(ch, text);
+    baseHashes[ch] = chapterContentHash(text);
+  });
+  return {allowWrites, working, baseHashes, patches:[], writeCount:0};
+}
+
+function agentChapterSummary(run){
+  return getEditorChapterNumbers().map(ch => ({
+    chapter:ch,
+    title:getEditorChapterTitle(ch),
+    characters:countTextChars(run.working.get(ch) || ''),
+    editable:agentCanEditChapter(ch),
+    hash:chapterContentHash(run.working.get(ch) || ''),
+  }));
+}
+
+function editorAgentToolDefinitions(includeWriteTools){
+  const tools = [
+    {type:'function',function:{name:'list_chapters',description:'列出章节标题、字数、哈希和是否允许编辑。',parameters:{type:'object',properties:{},additionalProperties:false}}},
+    {type:'function',function:{name:'read_full_novel',description:'读取完整小说；超长模式下会拒绝并返回章节目录。',parameters:{type:'object',properties:{},additionalProperties:false}}},
+    {type:'function',function:{name:'read_chapter',description:'读取指定章节正文。',parameters:{type:'object',properties:{chapter:{type:'integer'}},required:['chapter'],additionalProperties:false}}},
+    {type:'function',function:{name:'read_chapter_context',description:'读取目标章以及前后各一整章。',parameters:{type:'object',properties:{chapter:{type:'integer'}},required:['chapter'],additionalProperties:false}}},
+    {type:'function',function:{name:'search_novel',description:'在全部章节中搜索文字并返回上下文。',parameters:{type:'object',properties:{query:{type:'string'},limit:{type:'integer'}},required:['query'],additionalProperties:false}}},
+    {type:'function',function:{name:'get_selection',description:'读取用户当前在编辑器中选中的文字。',parameters:{type:'object',properties:{},additionalProperties:false}}},
+  ];
+  if(includeWriteTools){
+    tools.push(
+      {type:'function',function:{name:'replace_selection',description:'仅替换用户当前选区。',parameters:{type:'object',properties:{new_text:{type:'string'}},required:['new_text'],additionalProperties:false}}},
+      {type:'function',function:{name:'replace_text',description:'在指定章节中精确替换唯一出现的原文。',parameters:{type:'object',properties:{chapter:{type:'integer'},old_text:{type:'string'},new_text:{type:'string'},expected_hash:{type:'string'}},required:['chapter','old_text','new_text'],additionalProperties:false}}},
+      {type:'function',function:{name:'insert_text',description:'在指定章节唯一锚点之前或之后插入文字。',parameters:{type:'object',properties:{chapter:{type:'integer'},anchor:{type:'string'},text:{type:'string'},position:{type:'string',enum:['before','after']}},required:['chapter','anchor','text','position'],additionalProperties:false}}},
+      {type:'function',function:{name:'delete_text',description:'删除指定章节中唯一出现的文字。',parameters:{type:'object',properties:{chapter:{type:'integer'},text:{type:'string'}},required:['chapter','text'],additionalProperties:false}}}
+    );
+  }
+  return tools;
+}
+
+function findUniqueText(text, needle){
+  if(!needle) return {ok:false,error:'原文不能为空'};
+  const first = text.indexOf(needle);
+  if(first < 0) return {ok:false,error:'未找到完全匹配的原文'};
+  if(text.indexOf(needle, first + needle.length) >= 0) return {ok:false,error:'原文出现多次，请提供更长的唯一片段'};
+  return {ok:true,index:first};
+}
+
+function stageAgentPatch(run, chapter, oldText, newText, index, tool){
+  if(!run.allowWrites) return {ok:false,error:'当前为计划阶段，写入工具不可用'};
+  if(!agentCanEditChapter(chapter)) return {ok:false,error:`第 ${chapter} 章未授权编辑`};
+  if(run.writeCount >= AGENT_WRITE_LIMIT) return {ok:false,error:'本次修改数量已达到安全上限，请分批继续'};
+  if(Math.max(oldText.length,newText.length) > AGENT_PATCH_TEXT_LIMIT) return {ok:false,error:`单次修改不能超过 ${AGENT_PATCH_TEXT_LIMIT} 字符，请拆成更小的精确修改`};
+  const current = run.working.get(chapter) || '';
+  const beforeHash = chapterContentHash(current);
+  const prefix = current.slice(Math.max(0,index - 100), index);
+  const suffix = current.slice(index + oldText.length, index + oldText.length + 100);
+  const next = current.slice(0,index) + newText + current.slice(index + oldText.length);
+  const patch = {
+    id:makeId('patch'), chapter:Number(chapter), tool,
+    before:oldText, after:newText, start:index, prefix, suffix,
+    beforeHash, afterHash:chapterContentHash(next), revertedAt:null,
+  };
+  run.working.set(Number(chapter), next);
+  run.patches.push(patch);
+  run.writeCount++;
+  return {ok:true,chapter:Number(chapter),patchId:patch.id,beforeCharacters:countTextChars(oldText),afterCharacters:countTextChars(newText),resultHash:patch.afterHash};
+}
+
+function executeEditorAgentTool(run, name, args){
+  const input = args && typeof args === 'object' ? args : {};
+  if(name === 'list_chapters') return {ok:true,chapters:agentChapterSummary(run),estimatedTokens:estimateNovelTokens(),longMode:isAgentLongNovel()};
+  if(name === 'read_full_novel'){
+    if(isAgentLongNovel()) return {ok:false,error:'当前小说已进入超长模式，请先使用章节目录或全文搜索自主定位相关章节。',chapters:agentChapterSummary(run)};
+    return {ok:true,chapters:getEditorChapterNumbers().map(ch => ({chapter:ch,title:getEditorChapterTitle(ch),content:run.working.get(ch)||''}))};
+  }
+  if(name === 'read_chapter'){
+    const chapter = Number(input.chapter);
+    if(!run.working.has(chapter)) return {ok:false,error:'章节不存在'};
+    return {ok:true,chapter,title:getEditorChapterTitle(chapter),content:run.working.get(chapter)||'',editable:agentCanEditChapter(chapter),hash:chapterContentHash(run.working.get(chapter)||'')};
+  }
+  if(name === 'read_chapter_context'){
+    const chapter = Number(input.chapter);
+    if(!run.working.has(chapter)) return {ok:false,error:'章节不存在'};
+    const selected = [chapter-1,chapter,chapter+1].filter(ch => run.working.has(ch));
+    return {ok:true,chapters:selected.map(ch => ({chapter:ch,title:getEditorChapterTitle(ch),content:run.working.get(ch)||'',editable:agentCanEditChapter(ch)}))};
+  }
+  if(name === 'search_novel'){
+    const query = String(input.query || '').trim();
+    if(!query) return {ok:false,error:'搜索文字不能为空'};
+    const limit = Math.max(1,Math.min(50,Number(input.limit)||20));
+    const matches = [];
+    for(const ch of getEditorChapterNumbers()){
+      const content = run.working.get(ch) || '';
+      let from = 0;
+      while(matches.length < limit){
+        const index = content.indexOf(query, from);
+        if(index < 0) break;
+        matches.push({chapter:ch,index,context:content.slice(Math.max(0,index-160),Math.min(content.length,index+query.length+160))});
+        from = index + Math.max(1,query.length);
+      }
+      if(matches.length >= limit) break;
+    }
+    return {ok:true,query,matches};
+  }
+  if(name === 'get_selection'){
+    if(!fullEditorSelection) return {ok:false,error:'用户当前没有有效的单章选区'};
+    return {ok:true,...fullEditorSelection,editable:agentCanEditChapter(fullEditorSelection.chapter)};
+  }
+  if(name === 'replace_selection'){
+    if(!fullEditorSelection) return {ok:false,error:'用户当前没有有效选区'};
+    const chapter = Number(fullEditorSelection.chapter);
+    const current = run.working.get(chapter) || '';
+    const selected = current.slice(fullEditorSelection.start, fullEditorSelection.end);
+    if(selected !== fullEditorSelection.text) return {ok:false,error:'选区内容已变化，请用户重新选择'};
+    return stageAgentPatch(run,chapter,selected,String(input.new_text||''),fullEditorSelection.start,name);
+  }
+  if(name === 'replace_text'){
+    const chapter = Number(input.chapter);
+    if(!run.working.has(chapter)) return {ok:false,error:'章节不存在'};
+    const current = run.working.get(chapter) || '';
+    if(input.expected_hash && input.expected_hash !== chapterContentHash(current)) return {ok:false,error:'章节哈希已变化，请重新读取章节'};
+    const found = findUniqueText(current,String(input.old_text||''));
+    if(!found.ok) return found;
+    return stageAgentPatch(run,chapter,String(input.old_text||''),String(input.new_text||''),found.index,name);
+  }
+  if(name === 'insert_text'){
+    const chapter = Number(input.chapter);
+    if(!run.working.has(chapter)) return {ok:false,error:'章节不存在'};
+    const current = run.working.get(chapter) || '';
+    const anchor = String(input.anchor || '');
+    const found = findUniqueText(current,anchor);
+    if(!found.ok) return found;
+    const index = input.position === 'before' ? found.index : found.index + anchor.length;
+    return stageAgentPatch(run,chapter,'',String(input.text||''),index,name);
+  }
+  if(name === 'delete_text'){
+    const chapter = Number(input.chapter);
+    if(!run.working.has(chapter)) return {ok:false,error:'章节不存在'};
+    const target = String(input.text || '');
+    const found = findUniqueText(run.working.get(chapter)||'',target);
+    if(!found.ok) return found;
+    return stageAgentPatch(run,chapter,target,'',found.index,name);
+  }
+  return {ok:false,error:`未知工具：${name}`};
+}
+
+async function apiAgentCompletion(messages, tools, jsonMode){
+  const routeConfig = getRouteConfig('editing');
+  const url = apiURL('/chat/completions', routeConfig);
+  const routeModel = routeConfig?.model || state.model;
+  const routeApiKey = routeConfig?.apiKey || state.apiKey;
+  const prepared = jsonMode ? messages.concat([{role:'system',content:`当前接口不使用原生工具调用。只能返回 JSON：{"tool_calls":[{"name":"工具名","arguments":{}}],"content":"最终回复"}。可用工具定义：${JSON.stringify(tools.map(t=>t.function))}`}]) : messages;
+  const {reqBody, cleanMessages} = buildChatRequestBody(prepared, {route:'editing'}, routeModel);
+  reqBody.stream = false;
+  reqBody.max_tokens = 8192;
+  if(!jsonMode && tools.length){
+    reqBody.tools = tools;
+    reqBody.tool_choice = 'auto';
+  }
+  recordDebugPrompt(cleanMessages, {model:routeModel,route:'editing-agent',url});
+  const resp = await fetch(url, {
+    method:'POST',
+    headers:Object.assign({'Content-Type':'application/json'}, routeApiKey ? {'Authorization':'Bearer '+routeApiKey} : {}),
+    body:JSON.stringify(reqBody),
+    signal:editorAgentAbortController?.signal,
+  });
+  if(!resp.ok){
+    const error = new Error(`HTTP ${resp.status}: ${(await resp.text().catch(()=>'' )).slice(0,300)}`);
+    error.status = resp.status;
+    throw error;
+  }
+  const data = await resp.json();
+  recordTokenUsage(data.usage);
+  updateTokenDisplay();
+  return {message:data.choices?.[0]?.message || {}, model:routeModel};
+}
+
+function parseAgentJsonEnvelope(content){
+  const text = String(content || '').trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'');
+  const first = text.indexOf('{');
+  const last = text.lastIndexOf('}');
+  if(first < 0 || last <= first) return {tool_calls:[],content:text};
+  try{
+    const parsed = JSON.parse(text.slice(first,last+1));
+    return {tool_calls:Array.isArray(parsed.tool_calls)?parsed.tool_calls:[],content:String(parsed.content||'')};
+  }catch(e){
+    return {tool_calls:[],content:text};
+  }
+}
+
+function agentInstructionLooksLikeEdit(instruction){
+  return /修改|润色|改写|重写|替换|删除|删掉|插入|补写|调整|修正|编辑|rewrite|edit|replace|delete|insert/i.test(String(instruction || ''));
+}
+
+function normalizeToolArguments(value){
+  if(value && typeof value === 'object') return value;
+  try{return JSON.parse(value || '{}')}catch(e){return {}}
+}
+
+function createPendingAgentBatch(run, instruction, model){
+  const chapters = Array.from(new Set(run.patches.map(p => p.chapter)));
+  const finalTexts = {};
+  chapters.forEach(ch => finalTexts[ch] = run.working.get(ch) || '');
+  return {
+    id:makeId('agentbatch'), instruction:String(instruction||''), model:model||getRouteModelName('editing'),
+    createdAt:nowISO(), patches:run.patches.map(p => ({...p, selected:true})),
+    baseHashes:Object.fromEntries(chapters.map(ch => [ch,run.baseHashes[ch]])), finalTexts,
+  };
+}
+
+async function runEditorAgent(instruction, options = {}){
+  ensureEditorAgentState();
+  if(editorAgentAbortController){ toast('Agent 正在运行'); return; }
+  const planning = state.editorAgent.planMode && !options.approvedPlan;
+  const allowWrites = !planning;
+  const run = createAgentRun(allowWrites);
+  const longMode = isAgentLongNovel();
+  const selectionInfo = fullEditorSelection ? `当前选区：第 ${fullEditorSelection.chapter} 章，${countTextChars(fullEditorSelection.text)} 字。没有明确扩大范围时只能修改该选区。` : '当前没有选区。除非用户明确要求某章、某个范围或全文，否则不要调用写入工具。';
+  const permissionInfo = `允许写入章节：${getEditorChapterNumbers().filter(agentCanEditChapter).join('、') || '无'}。未授权章节仍可读取。`;
+  const planInfo = planning ? '当前为计划阶段：只允许读取和搜索，最终回复请给出清晰的逐步修改计划，不得声称已修改。' : options.approvedPlan ? '用户已经批准以下计划，可以按计划调用写入工具。' : '';
+  const systemPrompt = `${longMode ? EDITOR_AGENT_PROMPTS.long : EDITOR_AGENT_PROMPTS.normal}\n${selectionInfo}\n${permissionInfo}\n${planInfo}`;
+  const tools = editorAgentToolDefinitions(allowWrites);
+  const recent = state.editorAgent.messages.slice(-16).map(msg => ({role:msg.role === 'assistant' ? 'assistant' : 'user',content:msg.content}));
+  const conversation = [{role:'system',content:systemPrompt},...recent];
+  if(options.approvedPlan) conversation.push({role:'user',content:instruction});
+  editorAgentAbortController = new AbortController();
+  const sendBtn = document.getElementById('editorAgentSend');
+  const stopBtn = document.getElementById('editorAgentStop');
+  if(sendBtn) sendBtn.style.display = 'none';
+  if(stopBtn) stopBtn.style.display = '';
+  renderEditorAgentMessages(planning ? '正在制定计划' : '正在阅读并处理');
+  let jsonMode = false;
+  let finalText = '';
+  let usedModel = getRouteModelName('editing');
+  try{
+    for(let round=0; round<AGENT_TOOL_ROUND_LIMIT; round++){
+      let response;
+      try{
+        response = await apiAgentCompletion(conversation,tools,jsonMode);
+      }catch(error){
+        if(!jsonMode && error.status === 400){
+          jsonMode = true;
+          conversation.push({role:'user',content:'当前接口不接受原生 tools 参数，请改用系统给出的 JSON 工具协议继续。'});
+          continue;
+        }
+        throw error;
+      }
+      usedModel = response.model || usedModel;
+      const message = response.message || {};
+      let calls = [];
+      let content = typeof message.content === 'string' ? message.content : '';
+      if(jsonMode){
+        const envelope = parseAgentJsonEnvelope(content);
+        calls = envelope.tool_calls.map((call,index) => ({id:`json_${round}_${index}`,name:call.name,arguments:call.arguments}));
+        content = envelope.content;
+      }else{
+        calls = (message.tool_calls || []).map(call => ({id:call.id || makeId('tool'),name:call.function?.name,arguments:call.function?.arguments}));
+      }
+      if(!jsonMode && !planning && !calls.length && !run.patches.length && agentInstructionLooksLikeEdit(instruction)){
+        jsonMode = true;
+        conversation.push({role:'assistant',content:content || ''});
+        conversation.push({role:'user',content:'请使用 JSON 工具协议实际执行可安全执行的修改；如果范围不明确，则在 content 中说明需要补充什么，不要虚构修改结果。'});
+        continue;
+      }
+      if(!calls.length){
+        finalText = content || (run.patches.length ? '修改方案已经准备完成。' : '本次没有需要执行的修改。');
+        break;
+      }
+      if(jsonMode){
+        conversation.push({role:'assistant',content:message.content || ''});
+      }else{
+        conversation.push({role:'assistant',content:message.content || null,tool_calls:message.tool_calls});
+      }
+      for(const call of calls){
+        const result = executeEditorAgentTool(run,call.name,normalizeToolArguments(call.arguments));
+        const resultText = JSON.stringify(result);
+        if(jsonMode) conversation.push({role:'user',content:`TOOL_RESULT ${call.name}: ${resultText}`});
+        else conversation.push({role:'tool',tool_call_id:call.id,name:call.name,content:resultText});
+      }
+      renderEditorAgentMessages(`正在执行工具 ${round + 1}/${AGENT_TOOL_ROUND_LIMIT}`);
+    }
+    if(!finalText) finalText = '本轮工具调用达到安全上限，已停下。你可以检查当前结果后继续。';
+    if(planning){
+      state.editorAgent.currentPlan = {id:makeId('agentplan'),createdAt:nowISO(),instruction,steps:parseAgentPlan(finalText)};
+      addEditorAgentMessage('assistant','计划已生成，请检查、修改或取消步骤后再批准执行。');
+      renderEditorAgentPlan();
+    }else{
+      addEditorAgentMessage('assistant',finalText);
+      if(run.patches.length){
+        state.editorAgent.pendingBatch = createPendingAgentBatch(run,instruction,usedModel);
+        if(state.editorAgent.applyMode === 'direct'){
+          const applied = applyPendingAgentBatch(true);
+          if(applied) addEditorAgentMessage('assistant',`已直接应用 ${run.patches.length} 处修改，可在修改记录中定位或撤销。`);
+        }else{
+          renderEditorAgentPending();
+        }
+      }
+    }
+    saveState();
+  }catch(error){
+    if(error.name === 'AbortError') addEditorAgentMessage('assistant','已停止本次 Agent 操作，未应用尚未确认的修改。');
+    else addEditorAgentMessage('assistant',`Agent 操作失败：${error.message || error}`);
+  }finally{
+    editorAgentAbortController = null;
+    if(sendBtn) sendBtn.style.display = '';
+    if(stopBtn) stopBtn.style.display = 'none';
+    renderEditorAgentMessages();
+    renderEditorAgentPlan();
+    renderEditorAgentPending();
+  }
+}
+
+async function sendEditorAgentMessage(){
+  const input = document.getElementById('editorAgentInput');
+  const instruction = String(input?.value || '').trim();
+  if(!instruction){ toast('请输入给 Agent 的指令'); return; }
+  addEditorAgentMessage('user',instruction);
+  if(input) input.value = '';
+  renderEditorAgentMessages();
+  saveState();
+  await runEditorAgent(instruction);
+}
+
+function stopEditorAgent(){
+  editorAgentAbortController?.abort();
+}
+
+function renderEditorAgentPending(){
+  const panel = document.getElementById('editorAgentPending');
+  if(!panel) return;
+  const batch = ensureEditorAgentState().pendingBatch;
+  panel.hidden = !batch?.patches?.length;
+  if(panel.hidden){ panel.innerHTML=''; return; }
+  panel.innerHTML = `<div class="agent-panel-title"><span>待确认修改 · ${batch.patches.length} 处</span><button class="btn btn-sm" onclick="discardPendingAgentBatch()">放弃</button></div>
+    ${batch.patches.map((patch,index) => `<div class="agent-patch"><div class="agent-patch-head"><input type="checkbox" ${patch.selected !== false ? 'checked' : ''} onchange="togglePendingAgentPatch(${index},this.checked)"><span>第 ${patch.chapter} 章</span></div><div class="agent-patch-diff"><div class="agent-patch-old">- ${escapeHtml(patch.before || '（插入）')}</div><div class="agent-patch-new">+ ${escapeHtml(patch.after || '（删除）')}</div></div></div>`).join('')}
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="applyPendingAgentBatch(false)">应用所选修改</button>`;
+}
+
+function togglePendingAgentPatch(index, selected){
+  const patch = state.editorAgent?.pendingBatch?.patches?.[index];
+  if(patch) patch.selected = !!selected;
+  saveState();
+}
+
+function discardPendingAgentBatch(){
+  state.editorAgent.pendingBatch = null;
+  renderEditorAgentPending();
+  saveState();
+}
+
+function rebuildPendingFinalTexts(batch){
+  const texts = {};
+  const involved = Array.from(new Set(batch.patches.map(p => Number(p.chapter))));
+  involved.forEach(ch => texts[ch] = getChapterContent(ch) || '');
+  for(const patch of batch.patches.filter(p => p.selected !== false)){
+    const current = texts[patch.chapter] || '';
+    const found = findUniqueText(current,patch.before);
+    let index = patch.before ? (found.ok ? found.index : -1) : patch.start;
+    if(patch.before && index < 0) return {ok:false,error:`第 ${patch.chapter} 章的待修改原文已变化`};
+    if(!patch.before){
+      const expected = batch.baseHashes?.[patch.chapter];
+      if(expected && expected !== chapterContentHash(getChapterContent(patch.chapter)||'')) return {ok:false,error:`第 ${patch.chapter} 章已被修改，请重新运行 Agent`};
+    }
+    texts[patch.chapter] = current.slice(0,index) + patch.after + current.slice(index + patch.before.length);
+    patch.start = index;
+  }
+  return {ok:true,texts};
+}
+
+function applyPendingAgentBatch(silent){
+  const batch = state.editorAgent?.pendingBatch;
+  if(!batch?.patches?.length) return false;
+  const selected = batch.patches.filter(p => p.selected !== false);
+  if(!selected.length){ toast('没有选中要应用的修改'); return false; }
+  const rebuilt = rebuildPendingFinalTexts(batch);
+  if(!rebuilt.ok){ toast(rebuilt.error); return false; }
+  const involved = Array.from(new Set(selected.map(p => Number(p.chapter))));
+  for(const chapter of involved){
+    if(!agentCanEditChapter(chapter)){ toast(`第 ${chapter} 章当前未授权编辑`); return false; }
+  }
+  const snapshots = {};
+  involved.forEach(ch => {
+    snapshots[ch] = createChapterSnapshot(ch,'before agent edit',{content:getChapterContent(ch)||'',allowEmpty:true})?.id || null;
+  });
+  involved.forEach(ch => setChapterContent(ch,rebuilt.texts[ch]||'',{skipSanitize:false}));
+  selected.forEach(patch => addOperationLog({chapter:patch.chapter,type:'agent-edit',route:'editing',model:batch.model,beforeCount:countTextChars(patch.before),afterCount:countTextChars(patch.after),snapshotId:snapshots[patch.chapter],message:batch.instruction}));
+  const history = {...batch,patches:selected.map(p => ({...p,selected:undefined})),appliedAt:nowISO()};
+  delete history.finalTexts;
+  state.agentEditHistory = [history].concat(state.agentEditHistory||[]).slice(0,AGENT_HISTORY_LIMIT);
+  state.editorAgent.pendingBatch = null;
+  involved.forEach(ch => {
+    const body = document.querySelector(`#fullEditorPaper .full-editor-body[data-chapter="${ch}"]`);
+    if(body) body.textContent = getChapterContent(ch)||'';
+  });
+  updateFullEditorCount();
+  updateBadge();
+  saveState();
+  renderEditorAgentPending();
+  renderAgentHistory();
+  if(!silent) toast(`已应用 ${selected.length} 处修改`);
+  return true;
+}
+
+function openAgentHistory(){
+  renderAgentHistory();
+  document.getElementById('agentHistoryOverlay')?.classList.add('show');
+}
+
+function closeAgentHistory(event){
+  if(event && event.target !== event.currentTarget) return;
+  document.getElementById('agentHistoryOverlay')?.classList.remove('show');
+}
+
+function renderAgentHistory(){
+  const list = document.getElementById('agentHistoryList');
+  if(!list) return;
+  const history = (state.agentEditHistory || []).slice().sort((a,b)=>String(b.appliedAt||b.createdAt).localeCompare(String(a.appliedAt||a.createdAt)));
+  const count = document.getElementById('agentHistoryCount');
+  if(count) count.textContent = `最近 ${history.length} 次修改`;
+  if(!history.length){ list.innerHTML='<div class="agent-message system">还没有 Agent 修改记录。</div>'; return; }
+  list.innerHTML = history.map(batch => `<article class="agent-history-batch"><strong>${escapeHtml(batch.instruction || 'Agent 修改')}</strong><div class="agent-history-meta">${escapeHtml(new Date(batch.appliedAt||batch.createdAt).toLocaleString())} · ${escapeHtml(batch.model||'')}</div>${(batch.patches||[]).map(patch => `<div class="agent-patch"><div class="agent-patch-head"><span>第 ${patch.chapter} 章${patch.revertedAt ? ' · 已撤销' : ''}</span></div><div class="agent-patch-diff"><div class="agent-patch-old">- ${escapeHtml(patch.before || '（插入）')}</div><div class="agent-patch-new">+ ${escapeHtml(patch.after || '（删除）')}</div></div><div class="agent-history-actions"><button class="btn btn-sm" onclick="locateAgentPatch('${batch.id}','${patch.id}')">定位</button><button class="btn btn-sm" ${patch.revertedAt ? 'disabled' : ''} onclick="undoAgentPatch('${batch.id}','${patch.id}')">撤销本处</button></div></div>`).join('')}<div class="agent-history-actions"><button class="btn btn-sm" onclick="undoAgentBatch('${batch.id}')">撤销本次</button></div></article>`).join('');
+}
+
+function findAgentHistoryPatch(batchId,patchId){
+  const batch = (state.agentEditHistory||[]).find(item => item.id === batchId);
+  return {batch,patch:batch?.patches?.find(item => item.id === patchId)};
+}
+
+function selectTextInEditorBody(body,start,length){
+  const walker = document.createTreeWalker(body,NodeFilter.SHOW_TEXT);
+  let node,offset=0,startNode=null,endNode=null,startOffset=0,endOffset=0;
+  while((node=walker.nextNode())){
+    const next=offset+node.nodeValue.length;
+    if(!startNode && start>=offset && start<=next){startNode=node;startOffset=start-offset;}
+    if(startNode && start+length>=offset && start+length<=next){endNode=node;endOffset=start+length-offset;break;}
+    offset=next;
+  }
+  if(startNode && endNode){
+    const range=document.createRange();range.setStart(startNode,startOffset);range.setEnd(endNode,endOffset);
+    const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);
+  }
+}
+
+function locateAgentPatch(batchId,patchId){
+  const {patch}=findAgentHistoryPatch(batchId,patchId);
+  if(!patch) return;
+  closeAgentHistory();
+  switchTab('editor');
+  setTimeout(() => {
+    const section=document.querySelector(`#fullEditorPaper .full-editor-chapter[data-editor-chapter="${patch.chapter}"]`);
+    const body=section?.querySelector('.full-editor-body');
+    section?.scrollIntoView({behavior:'smooth',block:'center'});
+    section?.classList.remove('agent-locate');
+    void section?.offsetWidth;
+    section?.classList.add('agent-locate');
+    const current=editorBodyText(body);
+    const target=patch.revertedAt ? patch.before : patch.after;
+    if(target){const found=findUniqueText(current,target);if(found.ok) selectTextInEditorBody(body,found.index,target.length);}
+  },80);
+}
+
+function resolvePatchPositionForUndo(content,patch){
+  if(patch.after){
+    const exact=findUniqueText(content,patch.after);
+    if(exact.ok) return exact.index;
+    return -1;
+  }
+  const left=String(patch.prefix||'').slice(-60);
+  const right=String(patch.suffix||'').slice(0,60);
+  const anchor=left+right;
+  const found=findUniqueText(content,anchor);
+  return found.ok ? found.index+left.length : -1;
+}
+
+function undoAgentPatch(batchId,patchId,silent=false){
+  const {batch,patch}=findAgentHistoryPatch(batchId,patchId);
+  if(!batch||!patch||patch.revertedAt) return false;
+  const content=getChapterContent(patch.chapter)||'';
+  const index=resolvePatchPositionForUndo(content,patch);
+  if(index<0){if(!silent)toast('无法安全定位该修改，正文可能已被手动改动');return false;}
+  createChapterSnapshot(patch.chapter,'before undo agent edit',{content,allowEmpty:true});
+  const next=content.slice(0,index)+patch.before+content.slice(index+patch.after.length);
+  setChapterContent(patch.chapter,next,{skipSanitize:false});
+  patch.revertedAt=nowISO();
+  addOperationLog({chapter:patch.chapter,type:'undo-agent-edit',route:'editing',beforeCount:countTextChars(content),afterCount:countTextChars(next),message:batch.instruction});
+  const body=document.querySelector(`#fullEditorPaper .full-editor-body[data-chapter="${patch.chapter}"]`);
+  if(body)body.textContent=next;
+  updateFullEditorCount();
+  saveState();
+  renderAgentHistory();
+  if(!silent)toast('已撤销本处修改');
+  return true;
+}
+
+function undoAgentBatch(batchId){
+  const batch=(state.agentEditHistory||[]).find(item=>item.id===batchId);
+  if(!batch)return;
+  let undone=0,conflicts=0;
+  [...(batch.patches||[])].reverse().forEach(patch=>{
+    if(patch.revertedAt)return;
+    if(undoAgentPatch(batchId,patch.id,true))undone++;else conflicts++;
+  });
+  renderAgentHistory();
+  toast(conflicts ? `已撤销 ${undone} 处，${conflicts} 处因正文变化未覆盖` : `已撤销本次 ${undone} 处修改`);
+}
+
 function updateBadge(){
   const written = state.chapters.filter(c => c.content && c.content.trim()).length;
   document.getElementById('chBadge').textContent = written;
@@ -10211,9 +11292,8 @@ async function init(){
   });
   updateReviewModeCards();
   
-  if(state.currentTab === 'write'){
-    switchTab('write');
-  }
+  const initialTab = ['project','outline','write','chat','editor','export'].includes(state.currentTab) ? state.currentTab : 'project';
+  switchTab(initialTab);
   ['rewriteInstruction','chatInput','referenceCompareOld','referenceCompareNew','outlineRawText','memoryEditTextarea'].forEach(id => {
     const el = document.getElementById(id);
     if(el && state.uiDrafts?.[id]) el.value = state.uiDrafts[id];
