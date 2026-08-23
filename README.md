@@ -1,18 +1,18 @@
-# ✍️ 小说写作助手 V4
+# ✍️ 小说写作助手 V4.4.4 AP
 
 一个面向长篇小说创作的单文件 HTML 工具。它把项目设定、大纲、分章正文、长期记忆、创作规则、参考风格、审稿修改和导出备份集中在一个浏览器页面里，适合从一句话灵感一路推进到几十章、几百章的持续创作。
 
-🌐 在线访问：[nanbo0ne.github.io/v4exG](https://nanbo0ne.github.io/v4exG/)
+🌐 网页打开：[GitHub 中打开 AP 版 index.html](https://github.com/nanbo0ne/v4exG/blob/main/index.html)（私有仓库，需要登录 GitHub）
 
 📦 项目仓库：[github.com/nanbo0ne/v4exG](https://github.com/nanbo0ne/v4exG)
 
-📄 当前主文件：
+📄 当前 AP 主文件：
 
 ```text
-novel-writer-V4.3.13-exGL-X-nomobile.html
+novel-writer-V4.4.4-AP-exGL-X-nomobile.html
 ```
 
-`index.html` 为 GitHub Pages 入口；当前 X 版已移除独立移动端适配，窄屏下仍保持桌面版布局。
+`index.html` 与 AP 主文件内容一致；当前 X 版已移除独立移动端适配，窄屏下仍保持桌面版布局。由于仓库保持私有，当前账号方案无法启用 GitHub Pages。
 
 ## ✨ 核心功能
 
