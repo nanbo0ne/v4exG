@@ -2,7 +2,7 @@
 
 一个面向长篇小说创作的单文件 HTML 工具。它把项目设定、大纲、分章正文、长期记忆、创作规则、参考风格、审稿修改和导出备份集中在一个浏览器页面里，适合从一句话灵感一路推进到几十章、几百章的持续创作。
 
-🌐 网页打开：[GitHub 中打开 AP 版 index.html](https://github.com/nanbo0ne/v4exG/blob/main/index.html)（私有仓库，需要登录 GitHub）
+📄 GitHub 文件：[查看 AP 版 index.html](https://github.com/nanbo0ne/v4exG/blob/main/index.html)（私有仓库，需要登录 GitHub）
 
 📦 项目仓库：[github.com/nanbo0ne/v4exG](https://github.com/nanbo0ne/v4exG)
 
