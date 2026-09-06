@@ -1,4 +1,4 @@
-# ✍️ 小说写作助手 V4.4.7 AP
+# ✍️ 小说写作助手 V4.4.8 AP
 
 一个面向长篇小说创作的单文件 HTML 工具。它把项目设定、大纲、分章正文、长期记忆、创作规则、参考风格、审稿修改和导出备份集中在一个浏览器页面里，适合从一句话灵感一路推进到几十章、几百章的持续创作。
 
@@ -9,7 +9,7 @@
 📄 当前 AP 主文件：
 
 ```text
-novel-writer-V4.4.7-AP-exGL-X-nomobile.html
+novel-writer-V4.4.8-AP-exGL-X-nomobile.html
 ```
 
 `index.html` 为 GitHub Pages 入口，并与 AP 主文件内容一致；当前 X 版已移除独立移动端适配，窄屏下仍保持桌面版布局。
@@ -94,6 +94,13 @@ novel-writer-V4.4.7-AP-exGL-X-nomobile.html
 V4.3.13-exG-X-nomobile 移除了独立移动端 App 式界面、底部 Tab、移动端 Sheet 和相关自动切换逻辑。手机或窄屏打开时仍使用桌面版布局，避免移动端适配逻辑影响主界面。
 
 ## 🧾 版本更新记录
+
+
+## V4.4.8 · AI 大纲修订 / Outline Revision
+
+在大纲页点击“AI 修改大纲”，发送完整大纲和修改意见，逐章对比新版后统一采用或取消。可请求增减章节、调整每章目标字数；采用时同步项目设置。已有正文和注意事项按原编号保留，移出大纲的正文仍可从全文编辑及导出访问。
+
+Use **AI 修改大纲** on the outline page to revise the entire outline with one instruction. Review old/new chapters and setting changes before accepting. Chapter count and target words per chapter update together; existing manuscript text and notes remain attached to their original chapter numbers. Removed outline chapters retain their text in the full editor and exports.
 
 ### V4.4.7 AP-exG-X-nomobile
 
