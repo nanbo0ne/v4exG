@@ -1,4 +1,4 @@
-# ✍️ 小说写作助手 V4.4.8 AP
+# ✍️ 小说写作助手 V4.4.9 AP
 
 一个面向长篇小说创作的单文件 HTML 工具。它把项目设定、大纲、分章正文、长期记忆、创作规则、参考风格、审稿修改和导出备份集中在一个浏览器页面里，适合从一句话灵感一路推进到几十章、几百章的持续创作。
 
@@ -9,7 +9,7 @@
 📄 当前 AP 主文件：
 
 ```text
-novel-writer-V4.4.8-AP-exGL-X-nomobile.html
+novel-writer-V4.4.9-AP-exGL-X-nomobile.html
 ```
 
 `index.html` 为 GitHub Pages 入口，并与 AP 主文件内容一致；当前 X 版已移除独立移动端适配，窄屏下仍保持桌面版布局。
@@ -95,6 +95,13 @@ V4.3.13-exG-X-nomobile 移除了独立移动端 App 式界面、底部 Tab、移
 
 ## 🧾 版本更新记录
 
+
+
+## V4.4.9 · 自由篇幅与参考前文 / Flexible Length and Prior Story
+
+章节数量和每章字数可分别留空，由 AI 根据故事自然决定；实际章节和一键生成遵循大纲，不为凑字数自动补写。项目页新增带独立开关的“参考前文”，默认关闭；开启后将完整前文提供给大纲和正文创作，关闭仍保留文本。支持保存、项目备份与导入；不自动摘要或截断，超出模型上下文时会提示调整。已有正文与注意事项保持不变。
+
+Leave chapter count or target words blank to let the model choose the scope naturally. Generation and progress follow the actual outline, without automatic word-count padding. **Prior Story** adds a per-project toggle, off by default: when enabled, the full text is included in outline and manuscript requests; disabling it keeps the saved text. Project backups retain both text and settings. No automatic summarization or truncation; context-limit errors prompt you to shorten the reference or change models. Existing chapters and notes are preserved.
 
 ## V4.4.8 · AI 大纲修订 / Outline Revision
 
