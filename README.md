@@ -1,4 +1,4 @@
-# ✍️ 小说写作助手 V4.4.9 AP
+# ✍️ 小说写作助手 V4.5.0 AP
 
 一个面向长篇小说创作的单文件 HTML 工具。它把项目设定、大纲、分章正文、长期记忆、创作规则、参考风格、审稿修改和导出备份集中在一个浏览器页面里，适合从一句话灵感一路推进到几十章、几百章的持续创作。
 
@@ -9,10 +9,10 @@
 📄 当前 AP 主文件：
 
 ```text
-novel-writer-V4.4.9-AP-exGL-X-nomobile.html
+novel-writer-V4.5.0-AP-exGL-X-nomobile.html
 ```
 
-`index.html` 为 GitHub Pages 入口，并与 AP 主文件内容一致；当前 X 版已移除独立移动端适配，窄屏下仍保持桌面版布局。
+`index.html` 为 GitHub Pages 入口，并与加密 AP 主文件内容一致。整体保留桌面工作流；新增 Agent 大工作区可在窄屏切换原文和最终成稿。本仓库仅发布加密 AP 成品，不提供未加密多模式工作源。
 
 ## ✨ 核心功能
 
@@ -96,6 +96,22 @@ V4.3.13-exG-X-nomobile 移除了独立移动端 App 式界面、底部 Tab、移
 ## 🧾 版本更新记录
 
 
+
+
+## V4.5.0 · 改稿工作区与会话回退 / Revision Workspace and Session Undo
+
+- **展开 Agent 工作区**：保留紧凑侧栏，也可在页面内打开“对话与计划 / 审阅修改 / 修改记录”。原文与成稿宽屏并排，窄屏切换；成稿可连续多段编辑，独立字号调节，操作按钮始终可达。
+- **临时修改记录**：每个实际应用的 Agent 补丁先备份、再保存正文，支持撤销本处、撤销本步，以及预览范围后回退到某步之前。批量回退先完整校验，冲突时全部取消，不覆盖后来的手工修改。
+- **会话生命周期**：记录按项目隔离保存在当前标签页的 sessionStorage，刷新保留，正常关闭标签页后清空；浏览器恢复标签页可能恢复会话。记录不包含在项目 JSON 或新的永久 Agent 快照中，存储不足时停止写入，不静默截断旧记录。其他功能的历史快照保持不变。
+- **数据与流程修复**：大纲导入拒绝重复、缺号和非法章号；空对话项目自动恢复可用会话；JSON 备份保留正文原始空行和空格；专家建议只在真正采用后标记“已应用”。直接修改模式继续保留，不增加强制范围审批。
+
+The expandable in-page Agent workspace shares the same conversation, plan and draft with the sidebar. Review original and final text side by side, or switch views on narrow screens. Large editable text areas, independent type sizing and fixed actions make long revisions easier to review.
+
+Every applied Agent patch is backed up before the manuscript is committed. Undo a patch or step, or preview and rewind multiple steps atomically. A manual-edit conflict cancels the entire rollback. Records live in per-project **sessionStorage**: refresh preserves them; closing the tab normally clears them, while browser session restoration may restore them. They are not exported in project JSON or stored as new permanent Agent snapshots. Full storage blocks the edit instead of silently discarding older records. Existing snapshots from other workflows are unchanged.
+
+This release also validates imported outline numbering, restores an empty chat session, preserves exact manuscript whitespace in JSON backups, and only marks expert suggestions as applied after adoption. Direct editing remains available without mandatory scope approval.
+
+![Agent 展开审阅工作区 / Expanded revision workspace](docs/agent-workspace.png)
 
 ## V4.4.9 · 自由篇幅与参考前文 / Flexible Length and Prior Story
 
